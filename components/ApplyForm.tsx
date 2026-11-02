@@ -37,7 +37,7 @@ export function ApplyForm({ slug, jobTitle, defaultSource, criteria }: Props) {
           <select
             name="source"
             defaultValue={source}
-            className="w-full rounded-xl border border-stone-300 bg-white px-3 py-2.5 outline-none focus:border-teal-700"
+            className="w-full rounded-xl border border-[#0a4a7c]/25 bg-white px-3 py-2.5 outline-none focus:border-[#00a651]"
           >
             {sources.map((item) => (
               <option key={item.id} value={item.id}>
@@ -49,7 +49,7 @@ export function ApplyForm({ slug, jobTitle, defaultSource, criteria }: Props) {
       </div>
 
       {criteria.length > 0 ? (
-        <fieldset className="space-y-3 rounded-2xl border border-teal-800/20 bg-white p-4">
+        <fieldset className="space-y-3 rounded-2xl border border-[#00a651]/30 bg-white p-4">
           <legend className="text-sm font-semibold text-stone-900">Do you meet these criteria?</legend>
           <p className="text-sm text-stone-600">
             Tick every item that applies to you. HR uses this to see how closely you match the role.
@@ -60,7 +60,7 @@ export function ApplyForm({ slug, jobTitle, defaultSource, criteria }: Props) {
                 type="checkbox"
                 name="criterion"
                 value={item.id}
-                className="mt-0.5 h-4 w-4 accent-teal-800"
+                className="mt-0.5 h-4 w-4 accent-[#00a651]"
               />
               <span>{item.label}</span>
             </label>
@@ -75,7 +75,7 @@ export function ApplyForm({ slug, jobTitle, defaultSource, criteria }: Props) {
           required
           rows={5}
           placeholder={`A short note on why you want ${jobTitle}.`}
-          className="w-full rounded-xl border border-stone-300 bg-white px-3 py-2.5 outline-none focus:border-teal-700"
+          className="w-full rounded-xl border border-[#0a4a7c]/25 bg-white px-3 py-2.5 outline-none focus:border-[#00a651]"
         />
       </label>
 
@@ -90,14 +90,14 @@ export function ApplyForm({ slug, jobTitle, defaultSource, criteria }: Props) {
           type="file"
           name="resume"
           accept=".pdf,.doc,.docx,application/pdf"
-          className="w-full rounded-xl border border-dashed border-stone-300 bg-white px-3 py-3 text-stone-600 file:mr-3 file:rounded-lg file:border-0 file:bg-teal-700 file:px-3 file:py-1.5 file:text-sm file:text-white"
+          className="w-full rounded-xl border border-dashed border-[#0a4a7c]/30 bg-white px-3 py-3 text-[#3d5a6e] file:mr-3 file:rounded-lg file:border-0 file:bg-[#0a4a7c] file:px-3 file:py-1.5 file:text-sm file:text-white"
         />
       </label>
 
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-full bg-teal-800 px-5 py-3 text-sm font-semibold text-white hover:bg-teal-700 disabled:opacity-60"
+        className="w-full rounded-full bg-[#00a651] px-5 py-3 text-sm font-semibold text-white hover:bg-[#008a44] disabled:opacity-60"
       >
         {pending ? "Sending application…" : "Submit application"}
       </button>
@@ -129,7 +129,7 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-stone-300 bg-white px-3 py-2.5 outline-none focus:border-teal-700"
+        className="w-full rounded-xl border border-[#0a4a7c]/25 bg-white px-3 py-2.5 outline-none focus:border-[#00a651]"
       />
     </label>
   );

@@ -24,6 +24,16 @@ body {
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
+.career-site {
+  --boa-navy: #0a4a7c;
+  --boa-navy-dark: #07365c;
+  --boa-green: #00a651;
+  --boa-green-dark: #008a44;
+  min-height: 100%;
+  background: #eef4f8;
+  color: #0a2f4a;
+}
+
 .hr-shell {
   background: #0f172a;
 }

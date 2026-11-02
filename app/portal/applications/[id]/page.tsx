@@ -26,7 +26,7 @@ export default async function ApplicantApplicationPage({
 
   return (
     <div className="space-y-6">
-      <Link href="/portal" className="text-sm text-teal-800 hover:underline">
+      <Link href="/portal" className="text-sm font-medium text-[#00a651] hover:underline">
         ← All applications
       </Link>
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">

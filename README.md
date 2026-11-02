@@ -15,10 +15,13 @@ Company hiring desk: candidates apply from the public careers site, a LinkedIn l
 
 ## Run it
 
+Postgres database name: `recruitment` (`DEV_DATABASE_URL` in `.env`).
+
 ```bash
 cd recruitment-system
 npm install
-npx prisma db push
+createdb recruitment
+npm run db:push
 npx prisma db seed
 npm run dev
 ```
@@ -29,5 +32,6 @@ HR desk: [http://localhost:3000/hr/login](http://localhost:3000/hr/login)
 
 - Admin: `hr@boarwanda.com` / `ChangeMe123!`
 - Sample staff: `recruiter@boarwanda.com` / `ChangeMe123!` (Applications and Roles only)
+- Sample applicants (after seed): `janvierhabineza105@gmail.com` and `hghisley@gmail.com` / `Applicant123!`
 
 Change `COMPANY_NAME` and `APP_URL` in `.env` so QR codes point at the real host (phone scans need a URL the phone can reach, not `localhost`).

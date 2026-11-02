@@ -27,7 +27,7 @@ export function ApplicantLoginForm() {
             name="email"
             type="email"
             required
-            className="w-full rounded-xl border border-slate-300 px-3 py-2.5 outline-none focus:border-[#0a4a6e] focus:ring-2 focus:ring-[#0a4a6e]/15"
+            className="w-full rounded-xl border border-[#0a4a7c]/25 px-3 py-2.5 outline-none focus:border-[#00a651] focus:ring-2 focus:ring-[#00a651]/20"
           />
         </label>
         <button
@@ -52,7 +52,7 @@ export function ApplicantLoginForm() {
             name="email"
             type="email"
             required
-            className="w-full rounded-xl border border-slate-300 px-3 py-2.5 outline-none focus:border-[#0a4a6e] focus:ring-2 focus:ring-[#0a4a6e]/15"
+            className="w-full rounded-xl border border-[#0a4a7c]/25 px-3 py-2.5 outline-none focus:border-[#00a651] focus:ring-2 focus:ring-[#00a651]/20"
           />
         </label>
         <label className="block text-sm">
@@ -61,13 +61,13 @@ export function ApplicantLoginForm() {
             name="password"
             type="password"
             required
-            className="w-full rounded-xl border border-slate-300 px-3 py-2.5 outline-none focus:border-[#0a4a6e] focus:ring-2 focus:ring-[#0a4a6e]/15"
+            className="w-full rounded-xl border border-[#0a4a7c]/25 px-3 py-2.5 outline-none focus:border-[#00a651] focus:ring-2 focus:ring-[#00a651]/20"
           />
         </label>
         <button
           type="submit"
           disabled={loggingIn}
-          className="w-full rounded-xl bg-[#0a4a6e] px-5 py-3 text-sm font-semibold text-white hover:bg-[#083a57] disabled:opacity-60"
+          className="w-full rounded-xl bg-[#00a651] px-5 py-3 text-sm font-semibold text-white hover:bg-[#008a44] disabled:opacity-60"
         >
           {loggingIn ? "Signing in…" : "Open portal"}
         </button>
