@@ -1,0 +1,174 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DEV_DATABASE_URL")
+}
+
+enum JobStatus {
+  DRAFT
+  PUBLISHED
+  CLOSED
+}
+
+enum HrRole {
+  ADMIN
+  STAFF
+}
+
+model HrUser {
+  id           String            @id @default(cuid())
+  email        String            @unique
+  name         String
+  passwordHash String
+  role         HrRole            @default(STAFF)
+  isActive     Boolean           @default(true)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  jobs         Job[]
+  menus        MenuPermission[]
+
+  @@map("hr_users")
+}
+
+model MenuPermission {
+  id      String @id @default(cuid())
+  userId  String
+  user    HrUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  menuKey String
+
+  @@unique([userId, menuKey])
+  @@index([userId])
+  @@map("menu_permissions")
+}
+
+model Job {
+  id            String         @id @default(cuid())
+  title         String
+  slug          String         @unique
+  department    String
+  location      String
+  employment    String
+  description   String
+  requirements  String         @default("")
+  salaryRange   String?
+  closesAt      DateTime?
+  status        JobStatus      @default(DRAFT)
+  isOpen        Boolean        @default(false)
+  publishedAt   DateTime?
+  postedById    String?
+  postedBy      HrUser?        @relation(fields: [postedById], references: [id], onDelete: SetNull)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  applications  Application[]
+  criteria      JobCriterion[]
+
+  @@index([status])
+  @@index([isOpen])
+  @@index([postedById])
+  @@map("jobs")
+}
+
+model JobCriterion {
+  id       String                  @id @default(cuid())
+  jobId    String
+  job      Job                     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  label    String
+  sortOrder Int                    @default(0)
+  matches  ApplicationCriterion[]
+
+  @@index([jobId])
+  @@map("job_criteria")
+}
+
+model Applicant {
+  id           String         @id @default(cuid())
+  email        String         @unique
+  fullName     String
+  passwordHash String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  applications Application[]
+
+  @@map("applicants")
+}
+
+model Application {
+  id               String              @id @default(cuid())
+  jobId            String
+  job              Job                 @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  applicantId      String?
+  applicant        Applicant?          @relation(fields: [applicantId], references: [id], onDelete: SetNull)
+  fullName         String
+  email            String
+  phone            String
+  city             String
+  linkedinUrl      String?
+  currentTitle     String?
+  yearsExperience  String?
+  coverLetter      String
+  resumePath       String?
+  resumeName       String?
+  source           String
+  status           String              @default("new")
+  notes            String              @default("")
+  nextStep         String              @default("")
+  examScore        Float?
+  examMax          Float?
+  examDate         DateTime?
+  examVenue        String?
+  interviewDate    DateTime?
+  interviewVenue   String?
+  matchPercent     Int?
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  events           ApplicationEvent[]
+  criteria         ApplicationCriterion[]
+
+  @@unique([jobId, email])
+  @@unique([jobId, applicantId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([email])
+  @@index([applicantId])
+  @@index([matchPercent])
+  @@map("applications")
+}
+
+model ApplicationCriterion {
+  applicationId String
+  application   Application  @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  criterionId   String
+  criterion     JobCriterion @relation(fields: [criterionId], references: [id], onDelete: Cascade)
+  met           Boolean      @default(false)
+
+  @@id([applicationId, criterionId])
+  @@index([criterionId])
+  @@map("application_criteria")
+}
+
+model ApplicationEvent {
+  id             String      @id @default(cuid())
+  applicationId  String
+  application    Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  title          String
+  detail         String      @default("")
+  createdAt      DateTime    @default(now())
+
+  @@index([applicationId])
+  @@map("application_events")
+}
+
+model MailSetting {
+  id       String @id @default("default")
+  host     String @default("smtp.gmail.com")
+  port     Int    @default(587)
+  secure   Boolean @default(false)
+  username String @default("")
+  password String @default("")
+  fromName String @default("BANK OF AFRICA RWANDA Careers")
+
+  @@map("mail_settings")
+}

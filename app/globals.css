@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f3efe6;
+  --foreground: #1c1917;
+  --ink: #1c1917;
+  --muted: #57534e;
+  --card: #fffdf8;
+  --line: #e7e0d4;
+  --teal: #0f766e;
+  --teal-dark: #115e59;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+.hr-shell {
+  background: #0f172a;
+}
+
+@media print {
+  @page {
+    margin: 12mm;
+    size: A4 landscape;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #0f172a !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-sheet {
+    color: #0f172a !important;
+  }
+
+  .print-sheet table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .print-sheet th,
+  .print-sheet td {
+    border: 1px solid #cbd5e1;
+    padding: 7px 8px;
+    font-size: 11px;
+    color: #0f172a !important;
+    background: #fff !important;
+  }
+
+  .print-sheet thead th {
+    background: #0a4a6e !important;
+    color: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-sheet a {
+    color: #0f172a !important;
+    text-decoration: none !important;
+  }
+}
