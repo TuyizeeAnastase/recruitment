@@ -4,6 +4,7 @@ import { canAccessMenu, homePath, requireMenu } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { parseJobForm, visibilityFromIntent } from "@/lib/jobs";
 import { parseCriteriaLabels } from "@/lib/match";
+import { loadJobCriteriaLabels, saveJobCriteria } from "@/lib/ensure-criteria";
 import { slugify } from "@/lib/slug";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -44,17 +45,24 @@ export async function createJobAction(_: { error?: string } | null, formData: Fo
   const visibility = visibilityFromIntent(intent);
   const slug = await uniqueSlug(parsed.title);
 
-  const job = await prisma.job.create({
-    data: {
-      ...parsed,
-      slug,
-      ...visibility,
-      postedById: user.id,
-      criteria: {
-        create: criteria.map((label, sortOrder) => ({ label, sortOrder })),
+  let job;
+  try {
+    job = await prisma.job.create({
+      data: {
+        ...parsed,
+        slug,
+        ...visibility,
+        postedById: user.id,
       },
-    },
-  });
+    });
+    await saveJobCriteria(job.id, criteria);
+  } catch (err) {
+    console.error(err);
+    return {
+      error:
+        "Could not save screening criteria. Stop the app, then in the project folder run npm run build && npm run start.",
+    };
+  }
 
   revalidateJobs(job.id, job.slug);
   redirect(canAccessMenu(user, "jobs") ? `/hr/jobs/${job.id}` : homePath(user));
@@ -86,17 +94,23 @@ export async function updateJobAction(
         }
       : visibilityFromIntent(intent, existing);
 
-  await prisma.jobCriterion.deleteMany({ where: { jobId } });
-  const job = await prisma.job.update({
-    where: { id: jobId },
-    data: {
-      ...parsed,
-      ...visibility,
-      criteria: {
-        create: criteria.map((label, sortOrder) => ({ label, sortOrder })),
+  let job;
+  try {
+    job = await prisma.job.update({
+      where: { id: jobId },
+      data: {
+        ...parsed,
+        ...visibility,
       },
-    },
-  });
+    });
+    await saveJobCriteria(job.id, criteria);
+  } catch (err) {
+    console.error(err);
+    return {
+      error:
+        "Could not save screening criteria. Stop the app, then in the project folder run npm run build && npm run start.",
+    };
+  }
 
   revalidateJobs(job.id, job.slug);
   redirect(`/hr/jobs/${job.id}`);
@@ -123,11 +137,11 @@ export async function setJobStatusAction(jobId: string, intent: "publish" | "dra
   await requireMenu("jobs");
   const job = await prisma.job.findUnique({
     where: { id: jobId },
-    include: { _count: { select: { criteria: true } } },
   });
   if (!job) return;
-  if (intent === "publish" && job._count.criteria === 0) {
-    redirect(`/hr/jobs/${jobId}/edit`);
+  if (intent === "publish") {
+    const labels = await loadJobCriteriaLabels(jobId);
+    if (labels.length === 0) redirect(`/hr/jobs/${jobId}/edit`);
   }
 
   await prisma.job.update({

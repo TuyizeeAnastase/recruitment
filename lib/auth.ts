@@ -59,16 +59,37 @@ export async function getHrUser(): Promise<SessionUser | null> {
   });
 }
 
+const hrOfficerMenus: MenuKey[] = [
+  "dashboard",
+  "staff-requests.review",
+  "applications",
+  "reports",
+  "jobs",
+  "jobs.create",
+];
+
 export function allowedMenuKeys(user: SessionUser) {
   if (user.role === "ADMIN") {
-    return ["dashboard", "applications", "reports", "jobs", "jobs.create", "users", "settings"];
+    return [
+      "dashboard",
+      "staff-requests",
+      "staff-requests.review",
+      "applications",
+      "reports",
+      "jobs",
+      "jobs.create",
+      "users",
+      "settings",
+    ];
   }
+  if (user.role === "HR") return hrOfficerMenus;
   return user.menus.map((item) => item.menuKey);
 }
 
 export function canAccessMenu(user: SessionUser, key: MenuKey) {
   if (!user.isActive) return false;
   if (user.role === "ADMIN") return true;
+  if (user.role === "HR") return hrOfficerMenus.includes(key);
   if (key === "reports") {
     return user.menus.some((item) => item.menuKey === "reports" || item.menuKey === "applications");
   }
@@ -79,12 +100,15 @@ export function homePath(user: SessionUser) {
   return firstAllowedPath(allowedMenuKeys(user));
 }
 
-export async function requireHr() {
+export async function requireHr(options?: { allowPasswordChange?: boolean }) {
   const user = await getHrUser();
   if (!user) redirect("/hr/login");
   if (!user.isActive) {
     await clearSession();
     redirect("/hr/login");
+  }
+  if (user.mustChangePassword && !options?.allowPasswordChange) {
+    redirect("/hr/change-password");
   }
   return user;
 }

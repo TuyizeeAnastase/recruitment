@@ -6,7 +6,9 @@ import { CompanyLogo } from "@/components/CompanyLogo";
 export const dynamic = "force-dynamic";
 
 export default async function HrLoginPage() {
-  if (await getHrUser()) redirect("/hr");
+  const existing = await getHrUser();
+  if (existing?.mustChangePassword) redirect("/hr/change-password");
+  if (existing) redirect("/hr");
 
   return (
     <div className="grid min-h-full place-items-center bg-[#f3f5f8] px-5 py-16">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
 import type { Job } from "@prisma/client";
 import { createJobAction, updateJobAction } from "@/app/actions/jobs";
 import { toDateInput } from "@/lib/jobs";
@@ -155,54 +155,31 @@ export function JobForm({ job, criteria = [] }: { job?: Job; criteria?: string[]
 }
 
 function CriteriaFields({ initial }: { initial: string[] }) {
-  const [rows, setRows] = useState(initial.length > 0 ? initial : [""]);
+  const extras = Math.max(0, 6 - initial.length);
+  const rows = [...initial, ...Array.from({ length: extras }, () => "")];
 
   return (
     <fieldset className="space-y-3 rounded-2xl border border-teal-500/20 bg-slate-950/40 p-4">
       <legend className="px-1 text-sm font-medium text-white">Screening criteria</legend>
       <p className="text-sm text-slate-400">
-        Applicants will tick the boxes they meet (for example “Bachelor’s degree”). The dashboard then
-        groups people by match: 100%, 90%, 70%, 50%. Add at least one before publishing.
+        Type one requirement per box, then click <span className="text-white">Save changes</span>. Empty
+        boxes are ignored. Applicants will tick what they meet.
       </p>
       {rows.map((row, index) => (
-        <div key={index} className="flex gap-2">
-          <input
-            name="criteria"
-            value={row}
-            onChange={(event) => {
-              const next = [...rows];
-              next[index] = event.target.value;
-              setRows(next);
-            }}
-            placeholder={
-              index === 0
-                ? "e.g. Bachelor’s degree in Computer Science"
-                : index === 1
-                  ? "e.g. 3+ years of software development"
-                  : "Another must-have for this role"
-            }
-            className={fieldClass}
-          />
-          {rows.length > 1 ? (
-            <button
-              type="button"
-              onClick={() => setRows(rows.filter((_, i) => i !== index))}
-              className="shrink-0 rounded-xl border border-slate-600 px-3 text-sm text-slate-300 hover:bg-slate-800"
-            >
-              Remove
-            </button>
-          ) : null}
-        </div>
+        <input
+          key={`${index}-${row}`}
+          name="criteria"
+          defaultValue={row}
+          placeholder={
+            index === 0
+              ? "e.g. Bachelor’s degree in Computer Science"
+              : index === 1
+                ? "e.g. 3+ years of software development"
+                : "Another must-have for this role"
+          }
+          className={fieldClass}
+        />
       ))}
-      {rows.length < 20 ? (
-        <button
-          type="button"
-          onClick={() => setRows([...rows, ""])}
-          className="text-sm font-medium text-teal-300 hover:underline"
-        >
-          + Add criterion
-        </button>
-      ) : null}
     </fieldset>
   );
 }

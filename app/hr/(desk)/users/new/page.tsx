@@ -14,7 +14,9 @@ export default async function NewUserPage() {
       </Link>
       <h1 className="mt-3 text-2xl font-semibold text-white">Create a user</h1>
       <p className="mt-2 mb-8 text-sm text-slate-400">
-        Staff only see the menus you tick. Administrators can open every screen, including this one.
+        Use <span className="text-slate-200">HR</span> for Human Resources officers — they are
+        notified when a department requests staff. Use Head of department / staff and tick only
+        Request staff for department heads. They set their own password on first sign-in.
       </p>
       <div className="rounded-2xl border border-slate-700 bg-slate-800/50 p-6">
         <UserForm />

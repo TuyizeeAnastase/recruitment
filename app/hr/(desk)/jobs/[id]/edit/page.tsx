@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { JobForm } from "@/components/JobForm";
+import { loadJobCriteriaLabels } from "@/lib/ensure-criteria";
 import { requireMenu } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -15,9 +16,9 @@ export default async function EditJobPage({
   const { id } = await params;
   const job = await prisma.job.findUnique({
     where: { id },
-    include: { criteria: { orderBy: { sortOrder: "asc" } } },
   });
   if (!job) notFound();
+  const criteria = await loadJobCriteriaLabels(job.id);
 
   return (
     <div className="max-w-3xl">
@@ -29,7 +30,7 @@ export default async function EditJobPage({
         Changes to a live role appear on the public careers site as soon as you save or publish.
       </p>
       <div className="rounded-2xl border border-slate-700 bg-slate-800/50 p-6">
-        <JobForm job={job} criteria={job.criteria.map((item) => item.label)} />
+        <JobForm job={job} criteria={criteria} />
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 export const menus = [
   { key: "dashboard", label: "Dashboard", href: "/hr", exact: true },
+  { key: "staff-requests", label: "Request staff", href: "/hr/staff-requests" },
+  { key: "staff-requests.review", label: "Hiring requests", href: "/hr/requisitions" },
   { key: "applications", label: "Applications", href: "/hr/applications" },
   { key: "reports", label: "Exam report", href: "/hr/reports/exams" },
   { key: "jobs", label: "Roles", href: "/hr/jobs" },

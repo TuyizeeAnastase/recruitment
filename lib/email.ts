@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import { prisma } from "./prisma";
 import { companyName, statusEmails, statusLabel } from "./company";
-import { portalLoginUrl } from "./origin";
+import { portalLoginUrl, publicOrigin } from "./origin";
 
 type MailPayload = {
   to: string;
@@ -217,4 +217,38 @@ export async function sendStatusEmail(input: {
     ctaLabel: "Open applicant portal",
     ctaHref: await portalLoginUrl(),
   });
+}
+
+export async function notifyHiringTeamOfRequisition(input: {
+  requesterName: string;
+  department: string;
+  positionTitle: string;
+  headcount: number;
+  requisitionId: string;
+}) {
+  const recipients = await prisma.hrUser.findMany({
+    where: {
+      isActive: true,
+      OR: [
+        { role: "HR" },
+        { role: "ADMIN" },
+        { menus: { some: { menuKey: "staff-requests.review" } } },
+      ],
+    },
+    select: { email: true, name: true },
+  });
+  const inbox = `${await publicOrigin()}/hr/requisitions`;
+  await Promise.all(
+    recipients.map((person) =>
+      sendMail({
+        to: person.email,
+        subject: `Staff request: ${input.positionTitle} (${input.department})`,
+        title: "New staff requisition",
+        body: `Dear ${person.name.split(" ")[0]}, <strong>${input.requesterName}</strong> has submitted a hiring request for <strong>${input.positionTitle}</strong> in <strong>${input.department}</strong> (${input.headcount} ${input.headcount === 1 ? "post" : "posts"}).`,
+        extra: "Please review the request in the HR desk and update its status.",
+        ctaLabel: "Open hiring requests",
+        ctaHref: inbox,
+      }),
+    ),
+  );
 }

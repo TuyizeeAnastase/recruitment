@@ -11,6 +11,7 @@ type UserValue = {
   email: string;
   role: HrRole;
   isActive: boolean;
+  department?: string;
   menus: { menuKey: string }[];
 };
 
@@ -57,7 +58,16 @@ export function UserForm({ user }: { user?: UserValue }) {
             required={!user}
             minLength={user ? undefined : 8}
             className={fieldClass}
-            placeholder={user ? "Leave blank to keep current" : "At least 8 characters"}
+            placeholder={user ? "Leave blank to keep current" : "They will change this on first login"}
+          />
+        </label>
+        <label className="block text-sm">
+          <span className="mb-1.5 block font-medium text-slate-200">Department</span>
+          <input
+            name="department"
+            defaultValue={user?.department ?? ""}
+            className={fieldClass}
+            placeholder="e.g. Retail Banking"
           />
         </label>
         <label className="block text-sm">
@@ -68,7 +78,8 @@ export function UserForm({ user }: { user?: UserValue }) {
             onChange={(e) => setRole(e.target.value as HrRole)}
             className={fieldClass}
           >
-            <option value="STAFF">Staff</option>
+            <option value="STAFF">Head of department / staff</option>
+            <option value="HR">HR</option>
             <option value="ADMIN">Administrator</option>
           </select>
         </label>
@@ -85,10 +96,18 @@ export function UserForm({ user }: { user?: UserValue }) {
         <p className="rounded-xl border border-teal-900 bg-teal-950/40 px-4 py-3 text-sm text-teal-100">
           Administrators can open every menu, including user management.
         </p>
+      ) : role === "HR" ? (
+        <p className="rounded-xl border border-teal-900 bg-teal-950/40 px-4 py-3 text-sm text-teal-100">
+          HR officers see recruitment work and receive a notification when a head of department
+          requests staff.
+        </p>
       ) : (
         <fieldset className="rounded-xl border border-slate-700 p-4">
           <legend className="px-1 text-sm font-medium text-slate-200">Menus this person can view</legend>
-          <p className="mb-3 text-xs text-slate-400">Only checked items appear in their sidebar.</p>
+          <p className="mb-3 text-xs text-slate-400">
+            Only checked items appear in their sidebar. For a head of department, tick only{" "}
+            <span className="text-slate-200">Request staff</span>.
+          </p>
           <div className="grid gap-2 sm:grid-cols-2">
             {staffMenus.map((menu) => (
               <label key={menu.key} className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm hover:bg-slate-900">

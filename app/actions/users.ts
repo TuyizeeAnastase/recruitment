@@ -16,7 +16,9 @@ function parseMenus(formData: FormData) {
 }
 
 function parseRole(value: string): HrRole {
-  return value === "ADMIN" ? "ADMIN" : "STAFF";
+  if (value === "ADMIN") return "ADMIN";
+  if (value === "HR") return "HR";
+  return "STAFF";
 }
 
 export async function createUserAction(_: { error?: string } | null, formData: FormData) {
@@ -28,6 +30,7 @@ export async function createUserAction(_: { error?: string } | null, formData: F
     .toLowerCase();
   const password = String(formData.get("password") ?? "");
   const role = parseRole(String(formData.get("role") ?? "STAFF"));
+  const department = String(formData.get("department") ?? "").trim();
   const menus = parseMenus(formData);
 
   if (!name || !email.includes("@")) {
@@ -51,11 +54,11 @@ export async function createUserAction(_: { error?: string } | null, formData: F
       email,
       passwordHash: await bcrypt.hash(password, 10),
       role,
+      department,
       isActive: true,
+      mustChangePassword: true,
       menus:
-        role === "STAFF"
-          ? { create: menus.map((menuKey) => ({ menuKey })) }
-          : undefined,
+        role === "STAFF" ? { create: menus.map((menuKey) => ({ menuKey })) } : undefined,
     },
   });
 
@@ -79,6 +82,7 @@ export async function updateUserAction(
     .toLowerCase();
   const password = String(formData.get("password") ?? "");
   const role = parseRole(String(formData.get("role") ?? "STAFF"));
+  const department = String(formData.get("department") ?? "").trim();
   const isActive = String(formData.get("isActive") ?? "") === "on";
   const menus = parseMenus(formData);
 
@@ -120,8 +124,10 @@ export async function updateUserAction(
         name,
         email,
         role,
+        department,
         isActive,
         passwordHash: password ? await bcrypt.hash(password, 10) : undefined,
+        mustChangePassword: password ? true : undefined,
         menus:
           role === "STAFF"
             ? { create: menus.map((menuKey) => ({ menuKey })) }

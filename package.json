@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -H 0.0.0.0 -p 4000",
     "lint": "eslint",
-    "db:push": "prisma db execute --schema prisma/schema.prisma --file prisma/add_tables.sql && prisma db execute --schema prisma/schema.prisma --file prisma/add_users.sql && prisma db execute --schema prisma/schema.prisma --file prisma/add_applicant.sql && prisma db execute --schema prisma/schema.prisma --file prisma/add_mail.sql && prisma db execute --schema prisma/schema.prisma --file prisma/add_criteria.sql",
+    "db:push": "prisma db execute --schema prisma/schema.prisma --file prisma/add_tables.sql && prisma db execute --schema prisma/schema.prisma --file prisma/add_users.sql && prisma db execute --schema prisma/schema.prisma --file prisma/add_applicant.sql && prisma db execute --schema prisma/schema.prisma --file prisma/add_mail.sql && prisma db execute --schema prisma/schema.prisma --file prisma/add_criteria.sql && prisma db execute --schema prisma/schema.prisma --file prisma/add_requisitions.sql",
     "db:seed": "prisma db seed",
     "postinstall": "prisma generate"
   },

@@ -15,7 +15,16 @@ enum JobStatus {
 
 enum HrRole {
   ADMIN
+  HR
   STAFF
+}
+
+enum RequisitionStatus {
+  SUBMITTED
+  UNDER_REVIEW
+  APPROVED
+  DECLINED
+  FULFILLED
 }
 
 model HrUser {
@@ -25,10 +34,14 @@ model HrUser {
   passwordHash String
   role         HrRole            @default(STAFF)
   isActive     Boolean           @default(true)
+  mustChangePassword Boolean     @default(false)
+  department   String            @default("")
   createdAt    DateTime          @default(now())
   updatedAt    DateTime          @updatedAt
   jobs         Job[]
   menus        MenuPermission[]
+  requisitions StaffRequisition[] @relation("RequisitionRequester")
+  reviewedRequisitions StaffRequisition[] @relation("RequisitionReviewer")
 
   @@map("hr_users")
 }
@@ -171,4 +184,29 @@ model MailSetting {
   fromName String @default("BANK OF AFRICA RWANDA Careers")
 
   @@map("mail_settings")
+}
+
+model StaffRequisition {
+  id              String             @id @default(cuid())
+  requestedById   String
+  requestedBy     HrUser             @relation("RequisitionRequester", fields: [requestedById], references: [id], onDelete: Cascade)
+  department      String
+  positionTitle   String
+  headcount       Int                @default(1)
+  employment      String
+  location        String             @default("")
+  justification   String
+  requiredBy      DateTime?
+  status          RequisitionStatus  @default(SUBMITTED)
+  hrNotes         String             @default("")
+  reviewedById    String?
+  reviewedBy      HrUser?            @relation("RequisitionReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  reviewedAt      DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@index([status])
+  @@index([requestedById])
+  @@index([createdAt])
+  @@map("staff_requisitions")
 }

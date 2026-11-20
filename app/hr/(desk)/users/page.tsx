@@ -19,7 +19,7 @@ export default async function UsersPage() {
         <div>
           <h1 className="text-2xl font-semibold text-white">Users</h1>
           <p className="mt-1 text-sm text-slate-400">
-            Create staff accounts and choose which HR menus each person can open.
+            Create HR staff or heads of department and choose which menus each person can open.
           </p>
         </div>
         <Link href="/hr/users/new" className="rounded-full bg-teal-600 px-4 py-2 text-sm font-medium text-white">
@@ -32,6 +32,7 @@ export default async function UsersPage() {
           <thead className="bg-slate-800 text-slate-400">
             <tr>
               <th className="px-4 py-3 font-medium">Person</th>
+              <th className="px-4 py-3 font-medium">Department</th>
               <th className="px-4 py-3 font-medium">Role</th>
               <th className="px-4 py-3 font-medium">Menus</th>
               <th className="px-4 py-3 font-medium">Status</th>
@@ -47,8 +48,9 @@ export default async function UsersPage() {
                   </Link>
                   <p className="text-xs text-slate-400">{person.email}</p>
                 </td>
+                <td className="px-4 py-3 text-slate-300">{person.department || "—"}</td>
                 <td className="px-4 py-3 text-slate-300">
-                  {person.role === "ADMIN" ? "Administrator" : "Staff"}
+                  {person.role === "ADMIN" ? "Administrator" : person.role === "HR" ? "HR" : "Staff"}
                 </td>
                 <td className="px-4 py-3 text-slate-300">
                   {person.role === "ADMIN"
