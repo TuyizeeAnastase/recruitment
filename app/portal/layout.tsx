@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CompanyLogo } from "@/components/CompanyLogo";
+import { PublicFooter } from "@/components/PublicFooter";
 import { getApplicant } from "@/lib/applicant-auth";
 import { applicantLogoutAction } from "@/app/actions/applicant-auth";
 
@@ -44,6 +45,7 @@ export default async function PortalShell({ children }: { children: React.ReactN
         </div>
       </header>
       <div className="mx-auto w-full max-w-5xl flex-1 px-5 py-10">{children}</div>
+      <PublicFooter />
     </div>
   );
 }

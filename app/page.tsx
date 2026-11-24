@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { companyName } from "@/lib/company";
 import { PublicHeader } from "@/components/PublicHeader";
+import { PublicFooter } from "@/components/PublicFooter";
 import { publishedJobsWhere } from "@/lib/jobs";
 
 export const dynamic = "force-dynamic";
@@ -56,6 +57,7 @@ export default async function CareersPage() {
           )}
         </div>
       </main>
+      <PublicFooter />
     </div>
   );
 }

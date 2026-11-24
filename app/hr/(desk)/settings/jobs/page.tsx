@@ -15,8 +15,8 @@ export default async function JobsSettingsPage() {
 
   return (
     <div>
-      <h2 className="text-lg font-semibold text-white">Roles</h2>
-      <p className="mt-2 mb-6 max-w-2xl text-sm text-slate-400">
+      <h2 className="text-lg font-semibold text-[#0a4a7c]">Roles</h2>
+      <p className="mt-2 mb-6 max-w-2xl text-sm text-[#5a7384]">
         {live} role{live === 1 ? "" : "s"} currently accept applications on the public careers site.
       </p>
 
@@ -30,9 +30,9 @@ export default async function JobsSettingsPage() {
         </form>
       ) : null}
 
-      <div className="overflow-hidden rounded-2xl border border-slate-700">
+      <div className="overflow-hidden rounded-2xl border border-[#0a4a7c]/15 bg-white shadow-sm">
         <table className="w-full text-left text-sm">
-          <thead className="bg-slate-800 text-slate-400">
+          <thead className="bg-[#0a4a7c] text-white">
             <tr>
               <th className="px-4 py-3 font-medium">Role</th>
               <th className="px-4 py-3 font-medium">Status</th>
@@ -41,15 +41,15 @@ export default async function JobsSettingsPage() {
           </thead>
           <tbody>
             {jobs.map((job) => (
-              <tr key={job.id} className="border-t border-slate-800">
+              <tr key={job.id} className="border-t border-[#0a4a7c]/10">
                 <td className="px-4 py-3">
-                  <Link href={`/hr/jobs/${job.id}`} className="font-medium text-white hover:underline">
+                  <Link href={`/hr/jobs/${job.id}`} className="font-medium text-[#0a4a7c] hover:underline">
                     {job.title}
                   </Link>
-                  <p className="text-xs text-slate-400">{job.department}</p>
+                  <p className="text-xs text-[#5a7384]">{job.department}</p>
                 </td>
-                <td className="px-4 py-3 text-slate-300">{jobStatusLabel(job.status)}</td>
-                <td className="px-4 py-3 text-slate-300">{job._count.applications}</td>
+                <td className="px-4 py-3 text-[#3d5a6e]">{jobStatusLabel(job.status)}</td>
+                <td className="px-4 py-3 text-[#3d5a6e]">{job._count.applications}</td>
               </tr>
             ))}
           </tbody>

@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { PublicHeader } from "@/components/PublicHeader";
+import { PublicFooter } from "@/components/PublicFooter";
+import { AdvertDownload } from "@/components/AdvertDownload";
+import { ensureAdvertColumns } from "@/lib/advert";
 import { ApplyForm } from "@/components/ApplyForm";
 import { sourceLabel } from "@/lib/company";
 import { jobIsAccepting } from "@/lib/jobs";
@@ -16,6 +19,7 @@ export default async function ApplyPage({
 }) {
   const { slug } = await params;
   const { src } = await searchParams;
+  await ensureAdvertColumns();
   const job = await prisma.job.findUnique({
     where: { slug },
     include: { criteria: { orderBy: { sortOrder: "asc" } } },
@@ -34,6 +38,15 @@ export default async function ApplyPage({
           Fill this form on your phone after scanning a QR code, from LinkedIn, or from our website.
           Source tracked as <span className="font-medium text-[#0a4a7c]">{sourceLabel(source)}</span>.
         </p>
+        {job.advertisementPath ? (
+          <div className="mt-6 rounded-2xl border border-[#0a4a7c]/15 bg-white p-4">
+            <p className="text-sm font-medium text-[#0a4a7c]">Role advertisement</p>
+            <p className="mt-1 mb-3 text-sm text-[#3d5a6e]">
+              Download and read the official notice before you apply.
+            </p>
+            <AdvertDownload slug={job.slug} fileName={job.advertisementName ?? "Download"} />
+          </div>
+        ) : null}
         {!jobIsAccepting(job) ? (
           <p className="mt-8 rounded-xl border border-amber-200 bg-amber-50 p-4 text-amber-900">
             This role is no longer open.
@@ -49,6 +62,7 @@ export default async function ApplyPage({
           </div>
         )}
       </main>
+      <PublicFooter />
     </div>
   );
 }

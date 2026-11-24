@@ -23,54 +23,54 @@ export function ExamInviteForm({
   const [state, action, pending] = useActionState(inviteWrittenExamAction.bind(null, id), null);
 
   return (
-    <form action={action} className="space-y-4 rounded-2xl border border-indigo-500/30 bg-slate-800/50 p-5">
+    <form action={action} className="space-y-4 rounded-2xl border border-indigo-500/30 bg-white shadow-sm p-5">
       <div>
         <p className="text-xs font-medium uppercase tracking-[0.16em] text-indigo-300">Step 1</p>
-        <h2 className="mt-1 font-medium text-white">Invite to written exam</h2>
-        <p className="mt-1 text-sm text-slate-400">
+        <h2 className="mt-1 font-medium text-[#0a4a7c]">Invite to written exam</h2>
+        <p className="mt-1 text-sm text-[#5a7384]">
           Set the date and venue, then email the applicant. This also appears in their portal.
         </p>
       </div>
 
       {state?.error ? (
-        <p className="rounded-lg border border-amber-400/40 bg-amber-950/40 px-3 py-2 text-sm text-amber-100">
+        <p className="rounded-lg border border-amber-400/40 bg-amber-50 px-3 py-2 text-sm text-amber-900">
           {state.error}
         </p>
       ) : state?.saved ? (
-        <p className="rounded-lg border border-teal-400/40 bg-teal-950/40 px-3 py-2 text-sm text-teal-100">
+        <p className="rounded-lg border border-teal-200 bg-teal-50 px-3 py-2 text-sm text-teal-800">
           {state.emailed ? "Exam invitation emailed to the applicant." : "Exam invitation saved."}
         </p>
       ) : null}
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-300">Exam date & time</span>
+          <span className="mb-1.5 block font-medium text-[#3d5a6e]">Exam date & time</span>
           <input
             name="examDate"
             type="datetime-local"
             required
             defaultValue={toLocal(examDate)}
-            className="w-full rounded-xl border border-slate-600 bg-slate-900 px-3 py-2.5 text-white"
+            className="w-full rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2.5 text-[#0a2f4a]"
           />
         </label>
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-300">Venue</span>
+          <span className="mb-1.5 block font-medium text-[#3d5a6e]">Venue</span>
           <input
             name="examVenue"
             required
             defaultValue={examVenue ?? ""}
             placeholder="BOA Head Office, Kigali"
-            className="w-full rounded-xl border border-slate-600 bg-slate-900 px-3 py-2.5 text-white"
+            className="w-full rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2.5 text-[#0a2f4a]"
           />
         </label>
       </div>
       <label className="block text-sm">
-        <span className="mb-1.5 block font-medium text-slate-300">Message (optional)</span>
+        <span className="mb-1.5 block font-medium text-[#3d5a6e]">Message (optional)</span>
         <textarea
           name="nextStep"
           rows={2}
           placeholder="Leave blank to send a standard exam invitation."
-          className="w-full rounded-xl border border-slate-600 bg-slate-900 px-3 py-2 text-white"
+          className="w-full rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2 text-[#0a2f4a]"
         />
       </label>
       <button

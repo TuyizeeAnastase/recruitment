@@ -38,6 +38,11 @@ body {
   background: #0f172a;
 }
 
+.hr-desk {
+  background: #eef4f8;
+  color: #0a2f4a;
+}
+
 @media print {
   @page {
     margin: 12mm;

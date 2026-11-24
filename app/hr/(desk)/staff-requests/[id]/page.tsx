@@ -33,12 +33,12 @@ export default async function StaffRequestDetailPage({
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
-      <Link href={backHref} className="text-sm text-teal-400 hover:underline">
+      <Link href={backHref} className="text-sm text-[#00a651] hover:underline">
         ← Back
       </Link>
       <div>
-        <p className="text-sm text-slate-400">{row.department}</p>
-        <h1 className="mt-1 text-2xl font-semibold text-white">{row.positionTitle}</h1>
+        <p className="text-sm text-[#5a7384]">{row.department}</p>
+        <h1 className="mt-1 text-2xl font-semibold text-[#0a4a7c]">{row.positionTitle}</h1>
         <p className="mt-2">
           <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${requisitionStatusClass(row.status)}`}>
             {requisitionStatusLabel(row.status)}
@@ -46,7 +46,7 @@ export default async function StaffRequestDetailPage({
         </p>
       </div>
 
-      <section className="grid gap-4 rounded-2xl border border-slate-700 bg-slate-800/40 p-5 sm:grid-cols-2">
+      <section className="grid gap-4 rounded-2xl border border-[#0a4a7c]/15 bg-white shadow-sm p-5 sm:grid-cols-2">
         <Info label="Requested by" value={`${row.requestedBy.name} · ${row.requestedBy.email}`} />
         <Info label="Posts" value={String(row.headcount)} />
         <Info label="Employment" value={row.employment} />
@@ -55,15 +55,15 @@ export default async function StaffRequestDetailPage({
         <Info label="Submitted" value={row.createdAt.toLocaleString("en-GB")} />
       </section>
 
-      <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-5">
-        <h2 className="font-semibold text-white">Business justification</h2>
-        <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-300">{row.justification}</p>
+      <section className="rounded-2xl border border-[#0a4a7c]/15 bg-white shadow-sm p-5">
+        <h2 className="font-semibold text-[#0a4a7c]">Business justification</h2>
+        <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-[#3d5a6e]">{row.justification}</p>
       </section>
 
       {row.hrNotes ? (
-        <section className="rounded-2xl border border-slate-700 bg-slate-800/40 p-5">
-          <h2 className="font-semibold text-white">HR note</h2>
-          <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-300">{row.hrNotes}</p>
+        <section className="rounded-2xl border border-[#0a4a7c]/15 bg-white shadow-sm p-5">
+          <h2 className="font-semibold text-[#0a4a7c]">HR note</h2>
+          <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-[#3d5a6e]">{row.hrNotes}</p>
           {row.reviewedBy ? (
             <p className="mt-2 text-xs text-slate-500">
               Updated by {row.reviewedBy.name}
@@ -74,8 +74,8 @@ export default async function StaffRequestDetailPage({
       ) : null}
 
       {canReview ? (
-        <section className="rounded-2xl border border-slate-700 bg-slate-800/50 p-5">
-          <h2 className="mb-4 font-semibold text-white">HR action</h2>
+        <section className="rounded-2xl border border-[#0a4a7c]/15 bg-white shadow-sm p-5">
+          <h2 className="mb-4 font-semibold text-[#0a4a7c]">HR action</h2>
           <RequisitionReviewForm id={row.id} status={row.status} hrNotes={row.hrNotes} />
         </section>
       ) : null}
@@ -87,7 +87,7 @@ function Info({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <p className="text-xs uppercase tracking-wide text-slate-500">{label}</p>
-      <p className="mt-1 text-sm text-slate-200">{value}</p>
+      <p className="mt-1 text-sm text-[#0a2f4a]">{value}</p>
     </div>
   );
 }

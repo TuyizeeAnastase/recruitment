@@ -16,7 +16,7 @@ type UserValue = {
 };
 
 const fieldClass =
-  "w-full rounded-xl border border-slate-600 bg-slate-950 px-3 py-2.5 text-slate-100 outline-none placeholder:text-slate-500 focus:border-teal-500";
+  "w-full rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2.5 text-[#0a2f4a] outline-none placeholder:text-[#8aa0b0] focus:border-teal-500";
 
 export function UserForm({ user }: { user?: UserValue }) {
   const action = user ? updateUserAction.bind(null, user.id) : createUserAction;
@@ -27,18 +27,18 @@ export function UserForm({ user }: { user?: UserValue }) {
   return (
     <form action={formAction} className="space-y-5">
       {state?.error ? (
-        <p className="rounded-lg border border-rose-400/40 bg-rose-950/40 px-3 py-2 text-sm text-rose-200">
+        <p className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-800">
           {state.error}
         </p>
       ) : null}
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-200">Full name</span>
+          <span className="mb-1.5 block font-medium text-[#0a2f4a]">Full name</span>
           <input name="name" required defaultValue={user?.name} className={fieldClass} placeholder="Jean Uwimana" />
         </label>
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-200">Work email</span>
+          <span className="mb-1.5 block font-medium text-[#0a2f4a]">Work email</span>
           <input
             name="email"
             type="email"
@@ -49,7 +49,7 @@ export function UserForm({ user }: { user?: UserValue }) {
           />
         </label>
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-200">
+          <span className="mb-1.5 block font-medium text-[#0a2f4a]">
             {user ? "New password (optional)" : "Temporary password"}
           </span>
           <input
@@ -62,7 +62,7 @@ export function UserForm({ user }: { user?: UserValue }) {
           />
         </label>
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-200">Department</span>
+          <span className="mb-1.5 block font-medium text-[#0a2f4a]">Department</span>
           <input
             name="department"
             defaultValue={user?.department ?? ""}
@@ -71,7 +71,7 @@ export function UserForm({ user }: { user?: UserValue }) {
           />
         </label>
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-200">Role</span>
+          <span className="mb-1.5 block font-medium text-[#0a2f4a]">Role</span>
           <select
             name="role"
             value={role}
@@ -86,31 +86,31 @@ export function UserForm({ user }: { user?: UserValue }) {
       </div>
 
       {user ? (
-        <label className="flex items-center gap-2 text-sm text-slate-200">
+        <label className="flex items-center gap-2 text-sm text-[#0a2f4a]">
           <input type="checkbox" name="isActive" defaultChecked={user.isActive} className="h-4 w-4 accent-teal-600" />
           Account is active
         </label>
       ) : null}
 
       {role === "ADMIN" ? (
-        <p className="rounded-xl border border-teal-900 bg-teal-950/40 px-4 py-3 text-sm text-teal-100">
+        <p className="rounded-xl border border-teal-200 bg-teal-50 px-4 py-3 text-sm text-teal-800">
           Administrators can open every menu, including user management.
         </p>
       ) : role === "HR" ? (
-        <p className="rounded-xl border border-teal-900 bg-teal-950/40 px-4 py-3 text-sm text-teal-100">
+        <p className="rounded-xl border border-teal-200 bg-teal-50 px-4 py-3 text-sm text-teal-800">
           HR officers see recruitment work and receive a notification when a head of department
           requests staff.
         </p>
       ) : (
-        <fieldset className="rounded-xl border border-slate-700 p-4">
-          <legend className="px-1 text-sm font-medium text-slate-200">Menus this person can view</legend>
-          <p className="mb-3 text-xs text-slate-400">
+        <fieldset className="rounded-xl border border-[#0a4a7c]/15 p-4">
+          <legend className="px-1 text-sm font-medium text-[#0a2f4a]">Menus this person can view</legend>
+          <p className="mb-3 text-xs text-[#5a7384]">
             Only checked items appear in their sidebar. For a head of department, tick only{" "}
-            <span className="text-slate-200">Request staff</span>.
+            <span className="text-[#0a2f4a]">Request staff</span>.
           </p>
           <div className="grid gap-2 sm:grid-cols-2">
             {staffMenus.map((menu) => (
-              <label key={menu.key} className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm hover:bg-slate-900">
+              <label key={menu.key} className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm hover:bg-white">
                 <input
                   type="checkbox"
                   name="menus"

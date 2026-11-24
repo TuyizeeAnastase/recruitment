@@ -45,19 +45,19 @@ export default async function JobSharePage({
     <div className="space-y-8">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-sm text-slate-400">{job.department}</p>
-          <h1 className="text-2xl font-semibold text-white">{job.title}</h1>
-          <p className="mt-1 text-sm text-slate-400">
+          <p className="text-sm text-[#5a7384]">{job.department}</p>
+          <h1 className="text-2xl font-semibold text-[#0a4a7c]">{job.title}</h1>
+          <p className="mt-1 text-sm text-[#5a7384]">
             {job.location} · {job.employment}
             {job.salaryRange ? ` · ${job.salaryRange}` : ""}
             {job.postedBy ? ` · Posted by ${job.postedBy.name}` : ""}
           </p>
-          <p className="mt-2 text-xs uppercase tracking-wide text-teal-400">{jobStatusLabel(job.status)}</p>
+          <p className="mt-2 text-xs uppercase tracking-wide text-[#00a651]">{jobStatusLabel(job.status)}</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <Link
             href={`/hr/jobs/${job.id}/edit`}
-            className="rounded-full border border-slate-500 px-4 py-2 text-sm"
+            className="rounded-full border border-[#0a4a7c]/25 px-4 py-2 text-sm"
           >
             Edit
           </Link>
@@ -69,32 +69,32 @@ export default async function JobSharePage({
             </form>
           ) : (
             <form action={setJobStatusAction.bind(null, job.id, "close")}>
-              <button className="rounded-full bg-slate-700 px-4 py-2 text-sm">Close role</button>
+              <button className="rounded-full bg-[#0a4a7c] px-4 py-2 text-sm text-white">Close role</button>
             </form>
           )}
         </div>
       </div>
 
       {job.status !== "PUBLISHED" ? (
-        <p className="rounded-xl border border-amber-500/30 bg-amber-950/40 px-4 py-3 text-sm text-amber-100">
+        <p className="rounded-xl border border-amber-500/30 bg-amber-50 px-4 py-3 text-sm text-amber-900">
           This role is not live. Publish it to list it on the careers site and accept applications.
         </p>
       ) : null}
 
       <section className="grid gap-6 lg:grid-cols-[280px_1fr]">
-        <div className="rounded-2xl border border-slate-700 bg-white p-5 text-center text-slate-900">
+        <div className="rounded-2xl border border-[#0a4a7c]/15 bg-white p-5 text-center text-slate-900">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={qr} alt="Application QR code" className="mx-auto h-52 w-52" />
           <p className="mt-3 text-sm font-medium">Scan to apply</p>
           <p className="text-xs text-slate-500">{job.title}</p>
         </div>
-        <div className="space-y-4 rounded-2xl border border-slate-700 bg-slate-800/50 p-5">
+        <div className="space-y-4 rounded-2xl border border-[#0a4a7c]/15 bg-white shadow-sm p-5">
           <h2 className="font-semibold">Share outside the HR system</h2>
           <ShareRow label="Public job page" value={publicPage} />
           <ShareRow label="Website apply link" value={website} />
           <ShareRow label="LinkedIn post / message" value={linkedin} />
           <ShareRow label="QR / print / events" value={qrLink} />
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[#5a7384]">
             Each apply link tags the source so you can see whether the candidate came from LinkedIn, the
             website, or a QR scan.
           </p>
@@ -102,16 +102,16 @@ export default async function JobSharePage({
       </section>
 
       {job.criteria.length > 0 ? (
-        <section className="rounded-2xl border border-slate-700 bg-slate-800/50 p-5">
+        <section className="rounded-2xl border border-[#0a4a7c]/15 bg-white shadow-sm p-5">
           <h2 className="font-semibold">Screening criteria</h2>
-          <ol className="mt-3 list-decimal space-y-1 pl-5 text-sm text-slate-300">
+          <ol className="mt-3 list-decimal space-y-1 pl-5 text-sm text-[#3d5a6e]">
             {job.criteria.map((item) => (
               <li key={item.id}>{item.label}</li>
             ))}
           </ol>
         </section>
       ) : (
-        <p className="rounded-xl border border-amber-500/30 bg-amber-950/40 px-4 py-3 text-sm text-amber-100">
+        <p className="rounded-xl border border-amber-500/30 bg-amber-50 px-4 py-3 text-sm text-amber-900">
           This role has no screening criteria yet.{" "}
           <Link href={`/hr/jobs/${job.id}/edit`} className="underline">
             Add them
@@ -122,9 +122,9 @@ export default async function JobSharePage({
 
       <section>
         <h2 className="mb-3 font-semibold">Applications for this role</h2>
-        <div className="overflow-hidden rounded-2xl border border-slate-700">
+        <div className="overflow-hidden rounded-2xl border border-[#0a4a7c]/15">
           <table className="w-full text-left text-sm">
-            <thead className="bg-slate-800 text-slate-400">
+            <thead className="bg-[#eef4f8] text-[#5a7384]">
               <tr>
                 <th className="px-4 py-3">Candidate</th>
                 <th className="px-4 py-3">Match</th>
@@ -135,15 +135,15 @@ export default async function JobSharePage({
             <tbody>
               {job.applications.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-4 py-8 text-center text-slate-400">
+                  <td colSpan={4} className="px-4 py-8 text-center text-[#5a7384]">
                     No applications yet.
                   </td>
                 </tr>
               ) : (
                 job.applications.map((app) => (
-                  <tr key={app.id} className="border-t border-slate-800">
+                  <tr key={app.id} className="border-t border-[#0a4a7c]/10">
                     <td className="px-4 py-3">
-                      <Link href={`/hr/applications/${app.id}`} className="text-white hover:underline">
+                      <Link href={`/hr/applications/${app.id}`} className="text-[#0a4a7c] hover:underline">
                         {app.fullName}
                       </Link>
                     </td>
@@ -169,10 +169,10 @@ function ShareRow({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <div className="flex items-center justify-between gap-3">
-        <p className="text-xs uppercase tracking-wide text-slate-400">{label}</p>
+        <p className="text-xs uppercase tracking-wide text-[#5a7384]">{label}</p>
         <CopyButton value={value} />
       </div>
-      <p className="mt-1 break-all rounded-lg bg-slate-950 px-3 py-2 font-mono text-xs text-teal-300">{value}</p>
+      <p className="mt-1 break-all rounded-lg bg-[#eef4f8] px-3 py-2 font-mono text-xs text-[#00a651]">{value}</p>
     </div>
   );
 }

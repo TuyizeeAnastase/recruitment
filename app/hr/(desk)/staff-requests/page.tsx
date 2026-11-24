@@ -23,9 +23,9 @@ export default async function StaffRequestsPage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.18em] text-teal-400">Department hiring</p>
-          <h1 className="mt-2 text-2xl font-semibold text-white">Staff requests</h1>
-          <p className="mt-1 max-w-2xl text-sm text-slate-400">
+          <p className="text-xs uppercase tracking-[0.18em] text-[#00a651]">Department hiring</p>
+          <h1 className="mt-2 text-2xl font-semibold text-[#0a4a7c]">Staff requests</h1>
+          <p className="mt-1 max-w-2xl text-sm text-[#5a7384]">
             Request a new post for your department. Human Resources is notified immediately and will
             update the status of each request.
           </p>
@@ -44,9 +44,9 @@ export default async function StaffRequestsPage() {
         <SummaryCard label="Positions filled" value={filled} />
       </div>
 
-      <section className="overflow-hidden rounded-2xl border border-slate-700">
+      <section className="overflow-hidden rounded-2xl border border-[#0a4a7c]/15 bg-white shadow-sm">
         <table className="w-full text-left text-sm">
-          <thead className="bg-slate-800 text-slate-400">
+          <thead className="bg-[#0a4a7c] text-white">
             <tr>
               <th className="px-4 py-3 font-medium">Position</th>
               <th className="px-4 py-3 font-medium">Department</th>
@@ -58,21 +58,21 @@ export default async function StaffRequestsPage() {
           <tbody>
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={5} className="px-4 py-10 text-center text-slate-400">
+                <td colSpan={5} className="px-4 py-10 text-center text-[#5a7384]">
                   You have not submitted a staff request yet.
                 </td>
               </tr>
             ) : (
               rows.map((row) => (
-                <tr key={row.id} className="border-t border-slate-800">
+                <tr key={row.id} className="border-t border-[#0a4a7c]/10">
                   <td className="px-4 py-3">
-                    <Link href={`/hr/staff-requests/${row.id}`} className="font-medium text-white hover:underline">
+                    <Link href={`/hr/staff-requests/${row.id}`} className="font-medium text-[#0a4a7c] hover:underline">
                       {row.positionTitle}
                     </Link>
                   </td>
-                  <td className="px-4 py-3 text-slate-300">{row.department}</td>
-                  <td className="px-4 py-3 text-slate-300">{row.headcount}</td>
-                  <td className="px-4 py-3 text-slate-400">
+                  <td className="px-4 py-3 text-[#3d5a6e]">{row.department}</td>
+                  <td className="px-4 py-3 text-[#3d5a6e]">{row.headcount}</td>
+                  <td className="px-4 py-3 text-[#5a7384]">
                     {row.createdAt.toLocaleDateString("en-GB")}
                   </td>
                   <td className="px-4 py-3">
@@ -92,9 +92,9 @@ export default async function StaffRequestsPage() {
 
 function SummaryCard({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-2xl border border-slate-700 bg-slate-800/40 px-5 py-4">
-      <p className="text-xs uppercase tracking-wide text-slate-400">{label}</p>
-      <p className="mt-2 text-2xl font-semibold text-white">{value}</p>
+    <div className="rounded-2xl border border-[#0a4a7c]/15 bg-white shadow-sm px-5 py-4">
+      <p className="text-xs uppercase tracking-wide text-[#5a7384]">{label}</p>
+      <p className="mt-2 text-2xl font-semibold text-[#0a4a7c]">{value}</p>
     </div>
   );
 }

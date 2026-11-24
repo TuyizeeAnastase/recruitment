@@ -24,28 +24,28 @@ export function ProgressForm(props: Props) {
   const [state, action, pending] = useActionState(saveApplicationProgress.bind(null, props.id), null);
 
   return (
-    <form action={action} className="space-y-4 rounded-2xl border border-slate-700 bg-slate-800/50 p-5">
-      <h2 className="font-medium text-white">Interview and other stages</h2>
-      <p className="text-sm text-slate-400">
+    <form action={action} className="space-y-4 rounded-2xl border border-[#0a4a7c]/15 bg-white shadow-sm p-5">
+      <h2 className="font-medium text-[#0a4a7c]">Interview and other stages</h2>
+      <p className="text-sm text-[#5a7384]">
         After the written exam, move the candidate to interview or another stage. Tick notify to email them.
       </p>
 
       {state?.error ? (
-        <p className="rounded-lg border border-amber-400/40 bg-amber-950/40 px-3 py-2 text-sm text-amber-100">
+        <p className="rounded-lg border border-amber-400/40 bg-amber-50 px-3 py-2 text-sm text-amber-900">
           {state.error}
         </p>
       ) : state && "saved" in state && state.saved ? (
-        <p className="rounded-lg border border-teal-400/40 bg-teal-950/40 px-3 py-2 text-sm text-teal-100">
+        <p className="rounded-lg border border-teal-200 bg-teal-50 px-3 py-2 text-sm text-teal-800">
           {state.emailed ? "Progress saved and the candidate was emailed." : "Progress saved."}
         </p>
       ) : null}
 
       <label className="block text-sm">
-        <span className="mb-1.5 block font-medium text-slate-300">Stage</span>
+        <span className="mb-1.5 block font-medium text-[#3d5a6e]">Stage</span>
         <select
           name="status"
           defaultValue={props.status}
-          className="w-full rounded-xl border border-slate-600 bg-slate-900 px-3 py-2.5 text-white"
+          className="w-full rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2.5 text-[#0a2f4a]"
         >
           {statuses.map((item) => (
             <option key={item.id} value={item.id}>
@@ -56,38 +56,38 @@ export function ProgressForm(props: Props) {
       </label>
 
       <label className="block text-sm">
-        <span className="mb-1.5 block font-medium text-slate-300">What is next (shown to the applicant)</span>
+        <span className="mb-1.5 block font-medium text-[#3d5a6e]">What is next (shown to the applicant)</span>
         <textarea
           name="nextStep"
           rows={3}
           defaultValue={props.nextStep}
           placeholder="e.g. Attend the written exam on 12 Nov at Head Office, 09:00."
-          className="w-full rounded-xl border border-slate-600 bg-slate-900 px-3 py-2 text-white"
+          className="w-full rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2 text-[#0a2f4a]"
         />
       </label>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-300">Interview date & time</span>
+          <span className="mb-1.5 block font-medium text-[#3d5a6e]">Interview date & time</span>
           <input
             name="interviewDate"
             type="datetime-local"
             defaultValue={toLocal(props.interviewDate)}
-            className="w-full rounded-xl border border-slate-600 bg-slate-900 px-3 py-2.5 text-white"
+            className="w-full rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2.5 text-[#0a2f4a]"
           />
         </label>
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-300">Interview venue</span>
+          <span className="mb-1.5 block font-medium text-[#3d5a6e]">Interview venue</span>
           <input
             name="interviewVenue"
             defaultValue={props.interviewVenue ?? ""}
             placeholder="HR boardroom / Teams link"
-            className="w-full rounded-xl border border-slate-600 bg-slate-900 px-3 py-2.5 text-white"
+            className="w-full rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2.5 text-[#0a2f4a]"
           />
         </label>
       </div>
 
-      <label className="flex items-center gap-2 text-sm text-slate-200">
+      <label className="flex items-center gap-2 text-sm text-[#0a2f4a]">
         <input type="checkbox" name="notify" defaultChecked className="h-4 w-4 accent-teal-600" />
         Email the applicant about this update
       </label>

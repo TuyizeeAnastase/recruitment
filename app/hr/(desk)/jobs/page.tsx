@@ -20,8 +20,8 @@ export default async function JobsAdminPage() {
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold text-white">Roles</h1>
-          <p className="mt-1 text-sm text-slate-400">
+          <h1 className="text-2xl font-semibold text-[#0a4a7c]">Roles</h1>
+          <p className="mt-1 text-sm text-[#5a7384]">
             Draft, publish, and close openings. Published roles appear on the careers site.
           </p>
         </div>
@@ -33,9 +33,9 @@ export default async function JobsAdminPage() {
       </div>
 
       {jobs.length === 0 ? (
-        <div className="mt-8 rounded-2xl border border-dashed border-slate-600 bg-slate-800/40 p-10 text-center">
-          <p className="text-lg font-medium text-white">No roles yet</p>
-          <p className="mt-2 text-sm text-slate-400">Create a job post, then publish it when the brief is ready.</p>
+        <div className="mt-8 rounded-2xl border border-dashed border-[#0a4a7c]/20 bg-white shadow-sm p-10 text-center">
+          <p className="text-lg font-medium text-[#0a4a7c]">No roles yet</p>
+          <p className="mt-2 text-sm text-[#5a7384]">Create a job post, then publish it when the brief is ready.</p>
           <Link
             href="/hr/jobs/new"
             className="mt-6 inline-flex rounded-full bg-teal-600 px-4 py-2 text-sm font-medium text-white"
@@ -48,18 +48,18 @@ export default async function JobsAdminPage() {
           {jobs.map((job) => (
             <div
               key={job.id}
-              className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-700 bg-slate-800/50 p-5"
+              className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#0a4a7c]/15 bg-white shadow-sm p-5"
             >
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <Link href={`/hr/jobs/${job.id}`} className="text-lg font-medium text-white hover:underline">
+                  <Link href={`/hr/jobs/${job.id}`} className="text-lg font-medium text-[#0a4a7c] hover:underline">
                     {job.title}
                   </Link>
-                  <span className="rounded-full bg-slate-900 px-2 py-0.5 text-xs text-slate-300">
+                  <span className="rounded-full bg-white px-2 py-0.5 text-xs text-[#3d5a6e]">
                     {jobStatusLabel(job.status)}
                   </span>
                 </div>
-                <p className="mt-1 text-sm text-slate-400">
+                <p className="mt-1 text-sm text-[#5a7384]">
                   {job.department} · {job.location} · {job.employment} · {job._count.applications} applications
                   {job.postedBy ? ` · Posted by ${job.postedBy.name}` : ""}
                 </p>
@@ -67,15 +67,15 @@ export default async function JobsAdminPage() {
               <div className="flex flex-wrap gap-2">
                 <Link
                   href={`/hr/jobs/${job.id}/edit`}
-                  className="rounded-full border border-slate-500 px-3 py-1.5 text-sm"
+                  className="rounded-full border border-[#0a4a7c]/25 px-3 py-1.5 text-sm"
                 >
                   Edit
                 </Link>
-                <Link href={`/hr/jobs/${job.id}`} className="rounded-full border border-slate-500 px-3 py-1.5 text-sm">
+                <Link href={`/hr/jobs/${job.id}`} className="rounded-full border border-[#0a4a7c]/25 px-3 py-1.5 text-sm">
                   Share & QR
                 </Link>
                 <form action={toggleJobAction.bind(null, job.id)}>
-                  <button className="rounded-full bg-slate-700 px-3 py-1.5 text-sm">
+                  <button className="rounded-full bg-[#0a4a7c] px-3 py-1.5 text-sm text-white">
                     {job.isOpen ? "Close" : "Publish"}
                   </button>
                 </form>

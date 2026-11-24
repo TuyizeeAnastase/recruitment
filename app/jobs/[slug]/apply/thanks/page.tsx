@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PublicHeader } from "@/components/PublicHeader";
+import { PublicFooter } from "@/components/PublicFooter";
 
 export default async function ThanksPage({
   searchParams,
@@ -31,6 +32,7 @@ export default async function ThanksPage({
           </Link>
         </div>
       </main>
+      <PublicFooter />
     </div>
   );
 }

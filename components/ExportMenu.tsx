@@ -8,13 +8,13 @@ export function ExportMenu({ csvHref }: { csvHref: string }) {
     <div className="no-print flex flex-wrap gap-2">
       <a
         href={csvHref}
-        className="rounded-full border border-slate-500 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+        className="rounded-full border border-[#0a4a7c]/25 px-4 py-2 text-sm font-medium text-[#0a4a7c] hover:bg-[#eef4f8]"
       >
         Export CSV
       </a>
       <a
         href={`${csvHref}${joiner}format=excel`}
-        className="rounded-full border border-slate-500 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+        className="rounded-full border border-[#0a4a7c]/25 px-4 py-2 text-sm font-medium text-[#0a4a7c] hover:bg-[#eef4f8]"
       >
         Export Excel
       </a>

@@ -8,12 +8,12 @@ export default async function EmailSettingsPage() {
 
   return (
     <div className="max-w-2xl">
-      <h2 className="text-lg font-semibold text-white">Mail server</h2>
-      <p className="mt-2 mb-6 text-sm text-slate-400">
+      <h2 className="text-lg font-semibold text-[#0a4a7c]">Mail server</h2>
+      <p className="mt-2 mb-6 text-sm text-[#5a7384]">
         On the live server, save the bank’s SMTP host (Microsoft 365 or the internal relay). Gmail is only
         for local testing.
       </p>
-      <div className="rounded-2xl border border-slate-700 bg-slate-800/50 p-6">
+      <div className="rounded-2xl border border-[#0a4a7c]/15 bg-white shadow-sm p-6">
         <MailSettingsForm
           host={settings?.host ?? ""}
           port={settings?.port ?? 587}

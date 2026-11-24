@@ -36,12 +36,12 @@ export function matchWhere(bandId: string) {
 }
 
 export function matchBadgeClass(percent: number | null | undefined) {
-  if (percent == null) return "bg-slate-700 text-slate-300";
-  if (percent >= 100) return "bg-teal-500/20 text-teal-200";
-  if (percent >= 90) return "bg-emerald-500/20 text-emerald-200";
-  if (percent >= 70) return "bg-sky-500/20 text-sky-200";
-  if (percent >= 50) return "bg-amber-500/20 text-amber-200";
-  return "bg-rose-500/20 text-rose-200";
+  if (percent == null) return "bg-slate-100 text-slate-600";
+  if (percent >= 100) return "bg-teal-100 text-teal-800";
+  if (percent >= 90) return "bg-emerald-100 text-emerald-800";
+  if (percent >= 70) return "bg-sky-100 text-sky-800";
+  if (percent >= 50) return "bg-amber-100 text-amber-800";
+  return "bg-rose-100 text-rose-800";
 }
 
 export function matchLabel(percent: number | null | undefined) {

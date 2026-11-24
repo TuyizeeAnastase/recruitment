@@ -45,8 +45,8 @@ export default async function ApplicationsPage({
     <div>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-white">Applications</h1>
-          <p className="mt-1 text-sm text-slate-400">
+          <h1 className="text-2xl font-semibold text-[#0a4a7c]">Applications</h1>
+          <p className="mt-1 text-sm text-[#5a7384]">
             {fresh} new · {total} total from website, LinkedIn, and QR codes
           </p>
         </div>
@@ -54,7 +54,7 @@ export default async function ApplicationsPage({
           <ExportMenu csvHref={csvHref} />
           <Link
             href="/hr/reports/exams"
-            className="no-print rounded-full border border-slate-500 px-4 py-2 text-sm font-medium text-white"
+            className="no-print rounded-full border border-[#0a4a7c]/25 px-4 py-2 text-sm font-medium text-[#0a4a7c]"
           >
             Exam report
           </Link>
@@ -69,14 +69,14 @@ export default async function ApplicationsPage({
         </div>
       </div>
 
-      <form className="no-print mt-6 grid gap-3 rounded-2xl border border-slate-700 bg-slate-800/60 p-4 sm:grid-cols-5">
+      <form className="no-print mt-6 grid gap-3 rounded-2xl border border-[#0a4a7c]/15 bg-[#eef4f8]/60 p-4 sm:grid-cols-5">
         <input
           name="q"
           defaultValue={q}
           placeholder="Search name or email"
-          className="rounded-xl border border-slate-600 bg-slate-900 px-3 py-2 text-sm"
+          className="rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2 text-sm"
         />
-        <select name="job" defaultValue={job ?? ""} className="rounded-xl border border-slate-600 bg-slate-900 px-3 py-2 text-sm">
+        <select name="job" defaultValue={job ?? ""} className="rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2 text-sm">
           <option value="">All roles</option>
           {jobs.map((item) => (
             <option key={item.id} value={item.id}>
@@ -84,7 +84,7 @@ export default async function ApplicationsPage({
             </option>
           ))}
         </select>
-        <select name="status" defaultValue={status ?? ""} className="rounded-xl border border-slate-600 bg-slate-900 px-3 py-2 text-sm">
+        <select name="status" defaultValue={status ?? ""} className="rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2 text-sm">
           <option value="">All stages</option>
           {statuses.map((item) => (
             <option key={item.id} value={item.id}>
@@ -92,7 +92,7 @@ export default async function ApplicationsPage({
             </option>
           ))}
         </select>
-        <select name="match" defaultValue={match ?? ""} className="rounded-xl border border-slate-600 bg-slate-900 px-3 py-2 text-sm">
+        <select name="match" defaultValue={match ?? ""} className="rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2 text-sm">
           <option value="">All match levels</option>
           {matchBands.map((item) => (
             <option key={item.id} value={item.id}>
@@ -103,7 +103,7 @@ export default async function ApplicationsPage({
         <button className="rounded-xl bg-white px-3 py-2 text-sm font-medium text-slate-900">Filter</button>
       </form>
 
-      <div className="print-sheet mt-6 overflow-hidden rounded-2xl border border-slate-700 print:mt-0 print:rounded-none print:border-0">
+      <div className="print-sheet mt-6 overflow-hidden rounded-2xl border border-[#0a4a7c]/15 print:mt-0 print:rounded-none print:border-0">
         <header className="hidden border-b border-slate-300 pb-3 print:block">
           <p className="text-xs font-semibold tracking-[0.2em] text-[#0a4a6e]">{companyName}</p>
           <h1 className="mt-1 text-xl font-semibold text-slate-900">Applications list</h1>
@@ -123,33 +123,33 @@ export default async function ApplicationsPage({
           <tbody>
             {applications.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-10 text-center text-slate-400">
+                <td colSpan={7} className="px-4 py-10 text-center text-[#5a7384]">
                   No applications match these filters.
                 </td>
               </tr>
             ) : (
               applications.map((app) => (
-                <tr key={app.id} className="border-t border-slate-800 hover:bg-slate-800/40">
+                <tr key={app.id} className="border-t border-[#0a4a7c]/10 bg-white hover:bg-[#eef4f8]">
                   <td className="px-4 py-3">
-                    <Link href={`/hr/applications/${app.id}`} className="font-medium text-white hover:underline">
+                    <Link href={`/hr/applications/${app.id}`} className="font-medium text-[#0a4a7c] hover:underline">
                       {app.fullName}
                     </Link>
-                    <p className="text-xs text-slate-400">{app.email}</p>
+                    <p className="text-xs text-[#5a7384]">{app.email}</p>
                   </td>
                   <td className="px-4 py-3">
                     <span className={`rounded-full px-2 py-1 text-xs font-medium ${matchBadgeClass(app.matchPercent)}`}>
                       {matchLabel(app.matchPercent)}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-slate-300">{app.job.title}</td>
-                  <td className="px-4 py-3 text-slate-300">{sourceLabel(app.source)}</td>
+                  <td className="px-4 py-3 text-[#3d5a6e]">{app.job.title}</td>
+                  <td className="px-4 py-3 text-[#3d5a6e]">{sourceLabel(app.source)}</td>
                   <td className="px-4 py-3">
-                    <span className="rounded-full bg-slate-800 px-2 py-1 text-xs">{statusLabel(app.status)}</span>
+                    <span className="rounded-full bg-[#eef4f8] px-2 py-1 text-xs">{statusLabel(app.status)}</span>
                   </td>
-                  <td className="px-4 py-3 text-slate-300">
+                  <td className="px-4 py-3 text-[#3d5a6e]">
                     {app.examScore == null ? "—" : `${app.examScore}${app.examMax ? ` / ${app.examMax}` : ""}`}
                   </td>
-                  <td className="px-4 py-3 text-slate-400">{app.createdAt.toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-[#5a7384]">{app.createdAt.toLocaleDateString()}</td>
                 </tr>
               ))
             )}

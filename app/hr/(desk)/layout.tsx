@@ -37,7 +37,7 @@ export default async function HrDeskLayout({ children }: { children: React.React
     }));
 
   return (
-    <div className="flex min-h-full bg-slate-900 text-slate-100">
+    <div className="hr-desk flex min-h-full">
       <div className="no-print">
         <HrNav
           name={user.name}

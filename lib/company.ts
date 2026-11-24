@@ -39,23 +39,23 @@ export function sourceLabel(id: string) {
 export function statusBadgeClass(id: string) {
   switch (id) {
     case "new":
-      return "bg-sky-500/15 text-sky-300";
+      return "bg-sky-100 text-sky-800";
     case "reviewing":
-      return "bg-amber-500/15 text-amber-300";
+      return "bg-amber-100 text-amber-800";
     case "shortlisted":
-      return "bg-cyan-500/15 text-cyan-300";
+      return "bg-cyan-100 text-cyan-800";
     case "written_exam":
-      return "bg-indigo-500/15 text-indigo-300";
+      return "bg-indigo-100 text-indigo-800";
     case "interview":
-      return "bg-violet-500/15 text-violet-300";
+      return "bg-violet-100 text-violet-800";
     case "offer":
-      return "bg-emerald-500/15 text-emerald-300";
+      return "bg-emerald-100 text-emerald-800";
     case "hired":
-      return "bg-teal-500/15 text-teal-300";
+      return "bg-teal-100 text-teal-800";
     case "rejected":
-      return "bg-rose-500/15 text-rose-300";
+      return "bg-rose-100 text-rose-800";
     default:
-      return "bg-slate-700 text-slate-300";
+      return "bg-slate-100 text-slate-700";
   }
 }
 

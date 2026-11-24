@@ -31,6 +31,12 @@ export async function applyAction(_: { error?: string } | null, formData: FormDa
   if (!fullName || !email || !phone || !city || !coverLetter) {
     return { error: "Please complete the required fields." };
   }
+  if (String(formData.get("declaration") ?? "") !== "yes") {
+    return {
+      error:
+        "Please confirm that the information you have provided is true, complete, and accurate before submitting.",
+    };
+  }
   if (!email.includes("@") || email.includes(" ")) {
     return { error: "Enter a valid email address." };
   }

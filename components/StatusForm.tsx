@@ -11,12 +11,12 @@ export function StatusForm({ id, value }: { id: string; value: string }) {
       }}
     >
       <label className="block text-sm">
-        <span className="mb-1.5 block font-medium text-slate-300">Pipeline stage</span>
+        <span className="mb-1.5 block font-medium text-[#3d5a6e]">Pipeline stage</span>
         <select
           name="status"
           defaultValue={value}
           onChange={(e) => e.currentTarget.form?.requestSubmit()}
-          className="w-full rounded-xl border border-slate-600 bg-slate-900 px-3 py-2.5 text-white"
+          className="w-full rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2.5 text-[#0a2f4a]"
         >
           {statuses.map((s) => (
             <option key={s.id} value={s.id}>

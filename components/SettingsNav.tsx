@@ -21,7 +21,7 @@ export function SettingsNav() {
             key={link.href}
             href={link.href}
             className={`rounded-full px-4 py-2 text-sm font-medium ${
-              active ? "bg-teal-600 text-white" : "border border-slate-600 text-slate-300 hover:bg-slate-800"
+              active ? "bg-teal-600 text-white" : "border border-[#0a4a7c]/20 text-[#3d5a6e] hover:bg-[#eef4f8]"
             }`}
           >
             {link.label}

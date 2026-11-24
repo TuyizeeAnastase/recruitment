@@ -94,6 +94,22 @@ export function ApplyForm({ slug, jobTitle, defaultSource, criteria }: Props) {
         />
       </label>
 
+      <label className="flex items-start gap-3 rounded-xl border border-[#0a4a7c]/15 bg-[#eef4f8] p-4 text-sm text-[#0a2f4a]">
+        <input
+          type="checkbox"
+          name="declaration"
+          value="yes"
+          required
+          className="mt-0.5 h-4 w-4 shrink-0 accent-[#00a651]"
+        />
+        <span>
+          I confirm that the information I have provided is true, complete, and accurate to the best
+          of my knowledge. I understand that any false or misleading statement may result in my
+          application being declined. I consent to BANK OF AFRICA RWANDA processing my personal
+          data for recruitment purposes only.
+        </span>
+      </label>
+
       <button
         type="submit"
         disabled={pending}

@@ -67,6 +67,8 @@ model Job {
   description   String
   requirements  String         @default("")
   salaryRange   String?
+  advertisementPath String?
+  advertisementName String?
   closesAt      DateTime?
   status        JobStatus      @default(DRAFT)
   isOpen        Boolean        @default(false)

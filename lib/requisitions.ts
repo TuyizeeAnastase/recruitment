@@ -13,11 +13,11 @@ export function requisitionStatusLabel(status: string) {
 }
 
 export function requisitionStatusClass(status: string) {
-  if (status === "APPROVED") return "bg-teal-500/20 text-teal-200";
-  if (status === "UNDER_REVIEW") return "bg-sky-500/20 text-sky-200";
-  if (status === "FULFILLED") return "bg-emerald-500/20 text-emerald-200";
-  if (status === "DECLINED") return "bg-rose-500/20 text-rose-200";
-  return "bg-amber-500/20 text-amber-100";
+  if (status === "APPROVED") return "bg-teal-100 text-teal-800";
+  if (status === "UNDER_REVIEW") return "bg-sky-100 text-sky-800";
+  if (status === "FULFILLED") return "bg-emerald-100 text-emerald-800";
+  if (status === "DECLINED") return "bg-rose-100 text-rose-800";
+  return "bg-amber-100 text-amber-800";
 }
 
 export function isRequisitionStatus(value: string): value is RequisitionStatusId {

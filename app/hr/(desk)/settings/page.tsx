@@ -37,12 +37,12 @@ export default async function SettingsHomePage() {
         body={`${liveJobs} roles are currently published on the careers site. You can close all of them at once.`}
         action="Manage roles"
       />
-      <div className="rounded-2xl border border-slate-700 bg-slate-800/50 p-5">
-        <h2 className="font-semibold text-white">Company</h2>
-        <p className="mt-2 text-sm text-slate-400">
-          Public name is <span className="text-white">{companyName}</span> ({companyShort}). Change{" "}
-          <code className="text-teal-300">COMPANY_NAME</code> and <code className="text-teal-300">APP_URL</code>{" "}
-          in the server <code className="text-teal-300">.env</code> for go-live.
+      <div className="rounded-2xl border border-[#0a4a7c]/15 bg-white shadow-sm p-5">
+        <h2 className="font-semibold text-[#0a4a7c]">Company</h2>
+        <p className="mt-2 text-sm text-[#5a7384]">
+          Public name is <span className="font-medium text-[#0a4a7c]">{companyName}</span> ({companyShort}). Change{" "}
+          <code className="text-[#00a651]">COMPANY_NAME</code> and <code className="text-[#00a651]">APP_URL</code>{" "}
+          in the server <code className="text-[#00a651]">.env</code> for go-live.
         </p>
       </div>
     </div>
@@ -61,10 +61,10 @@ function Card({
   action: string;
 }) {
   return (
-    <Link href={href} className="block rounded-2xl border border-slate-700 bg-slate-800/50 p-5 hover:border-slate-500">
-      <h2 className="font-semibold text-white">{title}</h2>
-      <p className="mt-2 text-sm text-slate-400">{body}</p>
-      <p className="mt-4 text-sm font-medium text-teal-300">{action} →</p>
+    <Link href={href} className="block rounded-2xl border border-[#0a4a7c]/15 bg-white shadow-sm p-5 hover:border-[#0a4a7c]/25">
+      <h2 className="font-semibold text-[#0a4a7c]">{title}</h2>
+      <p className="mt-2 text-sm text-[#5a7384]">{body}</p>
+      <p className="mt-4 text-sm font-medium text-[#00a651]">{action} →</p>
     </Link>
   );
 }

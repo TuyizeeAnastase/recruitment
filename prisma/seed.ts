@@ -47,7 +47,69 @@ async function main() {
     ],
   });
 
+  const alice = await prisma.hrUser.upsert({
+    where: { email: "aliceuwase@boarwanda.com" },
+    update: {
+      passwordHash,
+      name: "Alice Uwase",
+      role: "STAFF",
+      department: "Risk",
+      isActive: true,
+      mustChangePassword: true,
+    },
+    create: {
+      email: "aliceuwase@boarwanda.com",
+      name: "Alice Uwase",
+      passwordHash,
+      role: "STAFF",
+      department: "Risk",
+      isActive: true,
+      mustChangePassword: true,
+    },
+  });
+  await prisma.menuPermission.deleteMany({ where: { userId: alice.id } });
+  await prisma.menuPermission.create({
+    data: { userId: alice.id, menuKey: "staff-requests" },
+  });
+
   const now = new Date();
+
+  const existingRequest = await prisma.staffRequisition.findFirst({
+    where: { requestedById: alice.id, positionTitle: "Credit Analyst" },
+  });
+  if (existingRequest) {
+    await prisma.staffRequisition.update({
+      where: { id: existingRequest.id },
+      data: {
+        department: "Risk",
+        headcount: 1,
+        employment: "Full-time",
+        location: "Head Office",
+        justification: "emergency",
+        status: "UNDER_REVIEW",
+        hrNotes: "The Hr team are going to discuss with management",
+        reviewedById: hr.id,
+        reviewedAt: existingRequest.reviewedAt ?? now,
+      },
+    });
+  } else {
+    await prisma.staffRequisition.create({
+      data: {
+        requestedById: alice.id,
+        department: "Risk",
+        positionTitle: "Credit Analyst",
+        headcount: 1,
+        employment: "Full-time",
+        location: "Head Office",
+        justification: "emergency",
+        requiredBy: new Date("2026-12-11T22:00:00.000Z"),
+        status: "UNDER_REVIEW",
+        hrNotes: "The Hr team are going to discuss with management",
+        reviewedById: hr.id,
+        reviewedAt: now,
+      },
+    });
+  }
 
   const software = await prisma.job.upsert({
     where: { slug: "software-engineer" },

@@ -32,6 +32,17 @@ HR desk: [http://localhost:3000/hr/login](http://localhost:3000/hr/login)
 
 - Admin: `hr@boarwanda.com` / `ChangeMe123!`
 - Sample staff: `recruiter@boarwanda.com` / `ChangeMe123!` (Applications and Roles only)
+- Head of department: `aliceuwase@boarwanda.com` / `ChangeMe123!` (Request staff only; first login asks for a new password)
 - Sample applicants (after seed): `janvierhabineza105@gmail.com` and `hghisley@gmail.com` / `Applicant123!`
+
+On the server, pull from GitHub, then:
+
+```bash
+npm install
+npm run db:push
+npx prisma db seed
+npm run build
+npm start
+```
 
 Change `COMPANY_NAME` and `APP_URL` in `.env` so QR codes point at the real host (phone scans need a URL the phone can reach, not `localhost`).

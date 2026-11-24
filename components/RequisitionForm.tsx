@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { createRequisitionAction } from "@/app/actions/requisitions";
 
 const fieldClass =
-  "w-full rounded-xl border border-slate-600 bg-slate-950 px-3 py-2.5 text-slate-100 outline-none placeholder:text-slate-500 focus:border-teal-500";
+  "w-full rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2.5 text-[#0a2f4a] outline-none placeholder:text-[#8aa0b0] focus:border-teal-500";
 
 export function RequisitionForm({ department }: { department?: string }) {
   const [state, formAction, pending] = useActionState(createRequisitionAction, null);
@@ -12,14 +12,14 @@ export function RequisitionForm({ department }: { department?: string }) {
   return (
     <form action={formAction} className="space-y-5">
       {state?.error ? (
-        <p className="rounded-lg border border-rose-400/40 bg-rose-950/40 px-3 py-2 text-sm text-rose-200">
+        <p className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-800">
           {state.error}
         </p>
       ) : null}
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-200">Department</span>
+          <span className="mb-1.5 block font-medium text-[#0a2f4a]">Department</span>
           <input
             name="department"
             required
@@ -29,7 +29,7 @@ export function RequisitionForm({ department }: { department?: string }) {
           />
         </label>
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-200">Position title</span>
+          <span className="mb-1.5 block font-medium text-[#0a2f4a]">Position title</span>
           <input
             name="positionTitle"
             required
@@ -38,11 +38,11 @@ export function RequisitionForm({ department }: { department?: string }) {
           />
         </label>
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-200">Number of posts</span>
+          <span className="mb-1.5 block font-medium text-[#0a2f4a]">Number of posts</span>
           <input name="headcount" type="number" min={1} max={50} defaultValue={1} className={fieldClass} />
         </label>
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-200">Employment type</span>
+          <span className="mb-1.5 block font-medium text-[#0a2f4a]">Employment type</span>
           <select name="employment" className={fieldClass} defaultValue="Full-time">
             <option>Full-time</option>
             <option>Part-time</option>
@@ -51,17 +51,17 @@ export function RequisitionForm({ department }: { department?: string }) {
           </select>
         </label>
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-200">Duty station</span>
+          <span className="mb-1.5 block font-medium text-[#0a2f4a]">Duty station</span>
           <input name="location" placeholder="e.g. Kigali Head Office" className={fieldClass} />
         </label>
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-200">Needed by (optional)</span>
+          <span className="mb-1.5 block font-medium text-[#0a2f4a]">Needed by (optional)</span>
           <input name="requiredBy" type="date" className={fieldClass} />
         </label>
       </div>
 
       <label className="block text-sm">
-        <span className="mb-1.5 block font-medium text-slate-200">Business justification</span>
+        <span className="mb-1.5 block font-medium text-[#0a2f4a]">Business justification</span>
         <textarea
           name="justification"
           required

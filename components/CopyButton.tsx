@@ -50,7 +50,7 @@ export function CopyButton({ value }: { value: string }) {
 
         window.prompt("Copy this link:", value);
       }}
-      className="rounded-full border border-slate-500 px-3 py-1 text-xs font-medium text-slate-200 hover:bg-slate-800"
+      className="rounded-full border border-[#0a4a7c]/25 px-3 py-1 text-xs font-medium text-[#0a2f4a] hover:bg-[#eef4f8]"
     >
       {copied ? "Copied" : "Copy"}
     </button>

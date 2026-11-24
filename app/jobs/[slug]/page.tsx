@@ -2,6 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { PublicHeader } from "@/components/PublicHeader";
+import { PublicFooter } from "@/components/PublicFooter";
+import { AdvertDownload } from "@/components/AdvertDownload";
+import { ensureAdvertColumns } from "@/lib/advert";
 import { jobIsAccepting } from "@/lib/jobs";
 
 export const dynamic = "force-dynamic";
@@ -12,6 +15,7 @@ export default async function JobPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  await ensureAdvertColumns();
   const job = await prisma.job.findUnique({
     where: { slug },
     include: { criteria: { orderBy: { sortOrder: "asc" } } },
@@ -47,6 +51,12 @@ export default async function JobPage({
             <div className="mt-3 whitespace-pre-wrap text-[#3d5a6e]">{job.requirements}</div>
           </>
         ) : null}
+        {job.advertisementPath ? (
+          <div className="mt-8">
+            <h2 className="mb-3 text-lg font-semibold text-[#0a4a7c]">Role advertisement</h2>
+            <AdvertDownload slug={job.slug} fileName={job.advertisementName ?? "Download"} />
+          </div>
+        ) : null}
         {jobIsAccepting(job) ? (
           <Link
             href={`/jobs/${job.slug}/apply?src=website`}
@@ -58,6 +68,7 @@ export default async function JobPage({
           <p className="mt-10 text-stone-500">This role is closed.</p>
         )}
       </main>
+      <PublicFooter />
     </div>
   );
 }

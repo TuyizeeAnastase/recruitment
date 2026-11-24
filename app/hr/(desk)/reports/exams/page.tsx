@@ -39,20 +39,20 @@ export default async function ExamReportPage({
     <div className="space-y-6">
       <div className="no-print flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-teal-400">Recruitment</p>
-          <h1 className="mt-1 text-2xl font-semibold text-white">Written exam report</h1>
-          <p className="mt-1 text-sm text-slate-400">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#00a651]">Recruitment</p>
+          <h1 className="mt-1 text-2xl font-semibold text-[#0a4a7c]">Written exam report</h1>
+          <p className="mt-1 text-sm text-[#5a7384]">
             Ranked marks{selectedJob ? ` for ${selectedJob.title}` : " across all roles"}.
           </p>
         </div>
         <ExportMenu csvHref={`/hr/reports/exams/export${job ? `?job=${job}` : ""}`} />
       </div>
 
-      <form className="no-print flex flex-wrap gap-3 rounded-2xl border border-slate-700 bg-slate-800/60 p-4">
+      <form className="no-print flex flex-wrap gap-3 rounded-2xl border border-[#0a4a7c]/15 bg-[#eef4f8]/60 p-4">
         <select
           name="job"
           defaultValue={job ?? ""}
-          className="rounded-xl border border-slate-600 bg-slate-900 px-3 py-2 text-sm"
+          className="rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2 text-sm"
         >
           <option value="">All roles</option>
           {jobs.map((item) => (
@@ -79,7 +79,7 @@ export default async function ExamReportPage({
           <Summary label="Average mark" value={average == null ? "—" : String(average)} />
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-slate-700 print:rounded-none print:border-0">
+        <div className="overflow-hidden rounded-2xl border border-[#0a4a7c]/15 print:rounded-none print:border-0">
           <table className="w-full text-left text-sm">
             <thead className="bg-[#0a4a6e] text-white">
               <tr>
@@ -93,10 +93,10 @@ export default async function ExamReportPage({
                 <th className="px-4 py-3 font-medium">%</th>
               </tr>
             </thead>
-            <tbody className="bg-slate-900/70 print:bg-white">
+            <tbody className="bg-white/70 print:bg-white">
               {ranked.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="px-4 py-10 text-center text-slate-400">
+                  <td colSpan={8} className="px-4 py-10 text-center text-[#5a7384]">
                     No applications yet.
                   </td>
                 </tr>
@@ -106,18 +106,18 @@ export default async function ExamReportPage({
                   return (
                     <tr
                       key={row.id}
-                      className={`border-t border-slate-800 text-slate-100 print:border-slate-200 print:text-slate-900 ${
-                        index % 2 === 1 ? "bg-slate-800/50 print:bg-slate-50" : ""
+                      className={`border-t border-[#0a4a7c]/10 text-[#0a2f4a] print:border-slate-200 print:text-slate-900 ${
+                        index % 2 === 1 ? "bg-white shadow-sm print:bg-slate-50" : ""
                       }`}
                     >
-                      <td className="px-4 py-3 font-semibold text-teal-300 print:text-slate-900">
+                      <td className="px-4 py-3 font-semibold text-[#00a651] print:text-slate-900">
                         {row.rank ?? "—"}
                       </td>
                       <td className="px-4 py-3">
-                        <a href={`/hr/applications/${row.id}`} className="font-medium text-white print:text-slate-900">
+                        <a href={`/hr/applications/${row.id}`} className="font-medium text-[#0a4a7c] print:text-slate-900">
                           {row.fullName}
                         </a>
-                        <p className="text-xs text-slate-400 print:text-slate-600">{row.email}</p>
+                        <p className="text-xs text-[#5a7384] print:text-slate-600">{row.email}</p>
                       </td>
                       <td className="px-4 py-3">{row.job.title}</td>
                       <td className="px-4 py-3">{statusLabel(row.status)}</td>
@@ -141,9 +141,9 @@ export default async function ExamReportPage({
 
 function Summary({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-slate-700 bg-slate-800/70 p-4 print:rounded-md print:border-slate-300 print:bg-slate-50">
-      <p className="text-sm text-slate-400 print:text-slate-600">{label}</p>
-      <p className="mt-1 text-2xl font-semibold text-white print:text-slate-900">{value}</p>
+    <div className="rounded-2xl border border-[#0a4a7c]/15 bg-[#eef4f8]/70 p-4 print:rounded-md print:border-slate-300 print:bg-slate-50">
+      <p className="text-sm text-[#5a7384] print:text-slate-600">{label}</p>
+      <p className="mt-1 text-2xl font-semibold text-[#0a4a7c] print:text-slate-900">{value}</p>
     </div>
   );
 }

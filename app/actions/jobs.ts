@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { parseJobForm, visibilityFromIntent } from "@/lib/jobs";
 import { parseCriteriaLabels } from "@/lib/match";
 import { loadJobCriteriaLabels, saveJobCriteria } from "@/lib/ensure-criteria";
+import { ensureAdvertColumns, replaceAdvertisement } from "@/lib/advert";
 import { slugify } from "@/lib/slug";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -47,12 +48,16 @@ export async function createJobAction(_: { error?: string } | null, formData: Fo
 
   let job;
   try {
+    await ensureAdvertColumns();
+    const advert = await replaceAdvertisement(null, formData.get("advertisement"));
     job = await prisma.job.create({
       data: {
         ...parsed,
         slug,
         ...visibility,
         postedById: user.id,
+        advertisementPath: advert?.path,
+        advertisementName: advert?.name,
       },
     });
     await saveJobCriteria(job.id, criteria);
@@ -60,7 +65,9 @@ export async function createJobAction(_: { error?: string } | null, formData: Fo
     console.error(err);
     return {
       error:
-        "Could not save screening criteria. Stop the app, then in the project folder run npm run build && npm run start.",
+        err instanceof Error
+          ? err.message
+          : "Could not save this role. Run npm run build && npm run start on the server.",
     };
   }
 
@@ -96,11 +103,16 @@ export async function updateJobAction(
 
   let job;
   try {
+    await ensureAdvertColumns();
+    const advert = await replaceAdvertisement(existing.advertisementPath, formData.get("advertisement"));
     job = await prisma.job.update({
       where: { id: jobId },
       data: {
         ...parsed,
         ...visibility,
+        ...(advert
+          ? { advertisementPath: advert.path, advertisementName: advert.name }
+          : {}),
       },
     });
     await saveJobCriteria(job.id, criteria);
@@ -108,7 +120,9 @@ export async function updateJobAction(
     console.error(err);
     return {
       error:
-        "Could not save screening criteria. Stop the app, then in the project folder run npm run build && npm run start.",
+        err instanceof Error
+          ? err.message
+          : "Could not save this role. Run npm run build && npm run start on the server.",
     };
   }
 

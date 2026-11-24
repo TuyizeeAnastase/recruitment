@@ -6,16 +6,16 @@ import { createJobAction, updateJobAction } from "@/app/actions/jobs";
 import { toDateInput } from "@/lib/jobs";
 
 const fieldClass =
-  "w-full rounded-xl border border-slate-600 bg-slate-950 px-3 py-2.5 text-slate-100 outline-none placeholder:text-slate-500 focus:border-teal-500";
+  "w-full rounded-xl border border-[#0a4a7c]/20 bg-white px-3 py-2.5 text-[#0a2f4a] outline-none placeholder:text-[#8aa0b0] focus:border-teal-500";
 
 export function JobForm({ job, criteria = [] }: { job?: Job; criteria?: string[] }) {
   const action = job ? updateJobAction.bind(null, job.id) : createJobAction;
   const [state, formAction, pending] = useActionState(action, null);
 
   return (
-    <form action={formAction} className="space-y-5">
+    <form action={formAction} encType="multipart/form-data" className="space-y-5">
       {state?.error ? (
-        <p className="rounded-lg border border-rose-400/40 bg-rose-950/40 px-3 py-2 text-sm text-rose-200">
+        <p className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-800">
           {state.error}
         </p>
       ) : null}
@@ -43,7 +43,7 @@ export function JobForm({ job, criteria = [] }: { job?: Job; criteria?: string[]
           defaultValue={job?.location}
         />
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-200">Employment type</span>
+          <span className="mb-1.5 block font-medium text-[#0a2f4a]">Employment type</span>
           <select name="employment" className={fieldClass} defaultValue={job?.employment ?? "Full-time"}>
             <option>Full-time</option>
             <option>Part-time</option>
@@ -58,7 +58,7 @@ export function JobForm({ job, criteria = [] }: { job?: Job; criteria?: string[]
           defaultValue={job?.salaryRange ?? ""}
         />
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-slate-200">Application deadline</span>
+          <span className="mb-1.5 block font-medium text-[#0a2f4a]">Application deadline</span>
           <input
             type="date"
             name="closesAt"
@@ -69,7 +69,7 @@ export function JobForm({ job, criteria = [] }: { job?: Job; criteria?: string[]
       </div>
 
       <label className="block text-sm">
-        <span className="mb-1.5 block font-medium text-slate-200">Role description</span>
+        <span className="mb-1.5 block font-medium text-[#0a2f4a]">Role description</span>
         <textarea
           name="description"
           required
@@ -81,7 +81,7 @@ export function JobForm({ job, criteria = [] }: { job?: Job; criteria?: string[]
       </label>
 
       <label className="block text-sm">
-        <span className="mb-1.5 block font-medium text-slate-200">What you look for (narrative)</span>
+        <span className="mb-1.5 block font-medium text-[#0a2f4a]">What you look for (narrative)</span>
         <textarea
           name="requirements"
           rows={5}
@@ -93,6 +93,23 @@ export function JobForm({ job, criteria = [] }: { job?: Job; criteria?: string[]
 
       <CriteriaFields initial={criteria} />
 
+      <label className="block text-sm">
+        <span className="mb-1.5 block font-medium text-[#0a2f4a]">Role advertisement (PDF or Word)</span>
+        <p className="mb-2 text-xs text-[#5a7384]">
+          Candidates will see this on the apply page and can download it. Leave empty to keep the
+          current file.
+        </p>
+        {job?.advertisementName ? (
+          <p className="mb-2 text-sm text-teal-200">Current file: {job.advertisementName}</p>
+        ) : null}
+        <input
+          type="file"
+          name="advertisement"
+          accept=".pdf,.doc,.docx,application/pdf"
+          className="w-full rounded-xl border border-dashed border-[#0a4a7c]/20 bg-white px-3 py-3 text-sm text-[#3d5a6e] file:mr-3 file:rounded-lg file:border-0 file:bg-teal-700 file:px-3 file:py-1.5 file:text-white"
+        />
+      </label>
+
       <div className="flex flex-wrap gap-3 pt-2">
         {job ? (
           <>
@@ -101,7 +118,7 @@ export function JobForm({ job, criteria = [] }: { job?: Job; criteria?: string[]
               name="intent"
               value="save"
               disabled={pending}
-              className="rounded-full border border-slate-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
+              className="rounded-full border border-[#0a4a7c]/25 px-5 py-2.5 text-sm font-semibold text-[#0a4a7c] disabled:opacity-60"
             >
               {pending ? "Saving…" : "Save changes"}
             </button>
@@ -121,7 +138,7 @@ export function JobForm({ job, criteria = [] }: { job?: Job; criteria?: string[]
                 name="intent"
                 value="close"
                 disabled={pending}
-                className="rounded-full bg-slate-700 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
+                className="rounded-full bg-[#0a4a7c] px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
               >
                 Close role
               </button>
@@ -134,7 +151,7 @@ export function JobForm({ job, criteria = [] }: { job?: Job; criteria?: string[]
               name="intent"
               value="draft"
               disabled={pending}
-              className="rounded-full border border-slate-500 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
+              className="rounded-full border border-[#0a4a7c]/25 px-5 py-2.5 text-sm font-semibold text-[#0a4a7c] disabled:opacity-60"
             >
               {pending ? "Saving…" : "Save as draft"}
             </button>
@@ -159,10 +176,10 @@ function CriteriaFields({ initial }: { initial: string[] }) {
   const rows = [...initial, ...Array.from({ length: extras }, () => "")];
 
   return (
-    <fieldset className="space-y-3 rounded-2xl border border-teal-500/20 bg-slate-950/40 p-4">
-      <legend className="px-1 text-sm font-medium text-white">Screening criteria</legend>
-      <p className="text-sm text-slate-400">
-        Type one requirement per box, then click <span className="text-white">Save changes</span>. Empty
+    <fieldset className="space-y-3 rounded-2xl border border-teal-500/20 bg-white p-4">
+      <legend className="px-1 text-sm font-medium text-[#0a4a7c]">Screening criteria</legend>
+      <p className="text-sm text-[#5a7384]">
+        Type one requirement per box, then click <span className="font-medium text-[#0a4a7c]">Save changes</span>. Empty
         boxes are ignored. Applicants will tick what they meet.
       </p>
       {rows.map((row, index) => (
@@ -199,7 +216,7 @@ function Input({
 }) {
   return (
     <label className="block text-sm">
-      <span className="mb-1.5 block font-medium text-slate-200">{label}</span>
+      <span className="mb-1.5 block font-medium text-[#0a2f4a]">{label}</span>
       <input
         name={name}
         required={required}
