@@ -105,7 +105,17 @@ export async function sendMail(payload: MailPayload) {
         { host: "smtp.gmail.com", port: 465, secure: true, auth, ...timeouts },
         { host: "smtp.gmail.com", port: 587, secure: false, requireTLS: true, auth, ...timeouts },
       ]
-    : [{ host: config.host, port: config.port, secure: config.secure, auth, ...timeouts }];
+    : [
+        {
+          host: config.host,
+          port: config.port,
+          secure: config.secure,
+          requireTLS: !config.secure,
+          auth,
+          tls: { rejectUnauthorized: false, servername: config.host },
+          ...timeouts,
+        },
+      ];
 
   const ctaHref = payload.ctaHref ?? (await portalLoginUrl());
   const html = wrap({ ...payload, ctaHref });
@@ -134,13 +144,20 @@ export async function sendMail(payload: MailPayload) {
   const message = lastError instanceof Error ? lastError.message : "Send failed";
   const authFailed = /invalid login|username and password not accepted|535|eauth/i.test(message);
   const timedOut = /greeting never received|etimedout|timeout/i.test(message);
+  const badCert = /self-signed|certificate|unable to verify|untrusted/i.test(message);
   return {
     sent: false as const,
     reason: authFailed
-      ? "Gmail rejected this mailbox. The sending address must match the Google account, 2-Step Verification must be on, and the field must be a new 16-character App Password (spaces are OK). Open myaccount.google.com/apppasswords, generate Mail, paste it, Save, then send the test."
+      ? gmail
+        ? "Gmail rejected this mailbox. The sending address must match the Google account, 2-Step Verification must be on, and the field must be a new 16-character App Password (spaces are OK). Open myaccount.google.com/apppasswords, generate Mail, paste it, Save, then send the test."
+        : "The mail server rejected this mailbox or password. Confirm host, port, and the SMTP password with IT, then save and send the test again."
       : timedOut
-        ? "Gmail SMTP timed out from this network. The application was still saved. Try the test email again, or request a portal password from /portal/login."
-        : message,
+        ? gmail
+          ? "Gmail SMTP timed out from this network. The application was still saved. Try the test email again, or request a portal password from /portal/login."
+          : "The mail server did not answer in time. Check that this machine can reach the SMTP host on that port."
+        : badCert
+          ? "The mail server uses a certificate this computer does not trust (often a self-signed bank certificate). Ask IT for a valid certificate on mail.boarwanda.com, or retry after the app is updated to accept that server."
+          : message,
   };
 }
 
